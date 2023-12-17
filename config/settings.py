@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'app_like',
     'app_products',
     'app_users',
+    'app_clients',
 ]
 
 
@@ -143,7 +144,7 @@ STATIC_ROOT = BASE_DIR / "static"
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
-# AUTH_USER_MODEL = "users.CustomUser"
+AUTH_USER_MODEL = "app_users.CustomUser"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
