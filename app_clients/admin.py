@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.utils.html import format_html,mark_safe
 
 from app_clients.models import Client
 
@@ -26,6 +27,7 @@ class ClientAdmin(admin.ModelAdmin):
                     "is_client",
                     "is_active",
                     "created_at",
+                    "avatar",
                 )
             },
         ),
@@ -48,5 +50,6 @@ class ClientAdmin(admin.ModelAdmin):
     )
     readonly_fields = ("created_at",)
 
+   
 
 admin.site.register(Client, ClientAdmin)

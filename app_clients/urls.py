@@ -7,6 +7,8 @@ router = routers.DefaultRouter()
 
 
 app_name = "clients"
+
+
 urlpatterns = [
 
     path("list/client/", ClientListView.as_view(), name="list_client"),
@@ -28,4 +30,5 @@ urlpatterns = [
         ResetPasswordConfirmView.as_view(),
         name="reset-password-confirm",
     ),
+    path('profile/client/', ClientProfileView.as_view(),name='profile')
 ] + router.urls

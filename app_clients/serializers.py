@@ -120,3 +120,9 @@ class ResetPasswordConfirmSerializer(serializers.Serializer):
         password = self.validated_data["password"]
         user.set_password(password)
         user.save()
+
+
+class ClientProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Client
+        fields = ('id', 'username', 'email', 'full_name','avatar')

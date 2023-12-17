@@ -12,6 +12,7 @@ from .serializers import (
     ClientSerializer,
     LoginClientSerializer,
     ResetPasswordConfirmSerializer,
+    ClientProfileSerializer,
 )
 
 from django.contrib.auth.tokens import default_token_generator
@@ -191,3 +192,12 @@ class ClientDeleteView(generics.DestroyAPIView):
     permission_classes =  [permissions.IsAdminUser]
 
     
+class ClientProfileView(generics.RetrieveUpdateAPIView):
+    serializer_class = ClientProfileSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_object(self):
+        return self.request.user
+
+    # def perform_create(self, serializer):
+    #     serializer.save(user=self.request.user)

@@ -16,6 +16,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         max_length=13, validators=[RegexValidator(r"^\+996\d{9}$")], blank=True
     )
     is_verified = models.BooleanField(default=False)
+    avatar = models.ImageField(upload_to="avatar/%Y/%m/%d/",blank=True,null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     token_auth = models.CharField(max_length=64, blank=True, null=True)
     is_staff = models.BooleanField(default=False)
