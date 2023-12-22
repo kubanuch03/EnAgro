@@ -49,10 +49,10 @@ INSTALLED_APPS = [
     # app
     'app_category',
     'app_comment',
-    'app_like',
     'app_products',
     'app_users',
     'app_clients',
+    'app_complaint',
 ]
 
 
