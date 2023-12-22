@@ -2,6 +2,7 @@ from rest_framework import status
 from rest_framework.generics import CreateAPIView, ListAPIView
 from rest_framework.response import Response
 from rest_framework import serializers
+from .task import notification
 from .models import Chat, Message
 from .serializers import ChatSerializer, MessageSerializer, ChatCreateSerializer
 
@@ -37,10 +38,15 @@ class ChatCreateView(CreateAPIView):
     #     return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
-
 class MessageCreateView(CreateAPIView):
     queryset = Message.objects.all()
     serializer_class = MessageSerializer
+
+    def perform_create(self, serializer):
+        message = serializer.save()
+        user_email = message.sender.email
+        notification.delay(user_email)
+        return Response({'message': 'Новые Уведомления'}, status=201)
 
     # def perform_create(self, serializer):
     #     chat_id = self.kwargs.get('chat_id')
