@@ -7,7 +7,7 @@ env.bak/
 venv.bak/
 pythonenv*
 pyvenv.cfg
-
+.env
 
 *.log
 
