@@ -52,11 +52,8 @@ INSTALLED_APPS = [
     'app_products',
     'app_users',
     'app_clients',
-<<<<<<< HEAD
     'app_chat',
-=======
     'app_complaint',
->>>>>>> d4576c0b87aa35c3c17839240bc99655687aad90
 ]
 
 
