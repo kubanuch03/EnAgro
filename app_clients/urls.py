@@ -10,11 +10,9 @@ app_name = "clients"
 
 
 urlpatterns = [
-
     path("list/client/", ClientListView.as_view(), name="list_client"),
     path("update/client/<int:pk>/", ClientUpdateView.as_view(), name="update_client"),
     path("delete/client/<int:pk>/", ClientDeleteView.as_view(), name="delete_client"),
-    
     path("register/client/", RegisterClientView.as_view(), name="register_client"),
     path("login/client/", LoginClientView.as_view(), name="login_client"),
     path(
@@ -30,5 +28,5 @@ urlpatterns = [
         ResetPasswordConfirmView.as_view(),
         name="reset-password-confirm",
     ),
-    path('profile/client/', ClientProfileView.as_view(),name='profile')
+    path("profile/client/", ClientProfileView.as_view(), name="profile"),
 ] + router.urls

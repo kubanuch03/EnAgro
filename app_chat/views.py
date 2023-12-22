@@ -37,7 +37,6 @@ class ChatCreateView(CreateAPIView):
     #     return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
-
 class MessageCreateView(CreateAPIView):
     queryset = Message.objects.all()
     serializer_class = MessageSerializer

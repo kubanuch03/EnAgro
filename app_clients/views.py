@@ -98,6 +98,7 @@ class RegisterClientView(generics.CreateAPIView):
             status=status.HTTP_201_CREATED,
         )
 
+
 class LoginClientView(generics.GenericAPIView):
     serializer_class = LoginClientSerializer
     permission_classes = [permissions.AllowAny]
@@ -172,8 +173,6 @@ class ConfirmEmailView(generics.GenericAPIView):
             )
 
 
-
-
 class ClientListView(generics.ListAPIView):
     queryset = Client.objects.all()
     serializer_class = ClientSerializer
@@ -183,15 +182,15 @@ class ClientListView(generics.ListAPIView):
 class ClientUpdateView(generics.RetrieveUpdateAPIView):
     queryset = Client.objects.all()
     serializer_class = ClientSerializer
-    permission_classes =  [IsClientOrAdmin]
+    permission_classes = [IsClientOrAdmin]
 
 
 class ClientDeleteView(generics.DestroyAPIView):
     queryset = Client.objects.all()
     serializer_class = ClientSerializer
-    permission_classes =  [permissions.IsAdminUser]
+    permission_classes = [permissions.IsAdminUser]
 
-    
+
 class ClientProfileView(generics.RetrieveUpdateAPIView):
     serializer_class = ClientProfileSerializer
     permission_classes = [permissions.IsAuthenticated]

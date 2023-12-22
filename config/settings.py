@@ -45,16 +45,14 @@ INSTALLED_APPS = [
     "drf_spectacular",
     "corsheaders",
     "drf_yasg",
-
-
     # app
-    'app_category',
-    'app_comment',
-    'app_products',
-    'app_users',
-    'app_clients',
-    'app_chat',
-    'app_complaint',
+    "app_category",
+    "app_comment",
+    "app_products",
+    "app_users",
+    "app_clients",
+    "app_chat",
+    "app_complaint",
 ]
 
 
@@ -145,8 +143,8 @@ USE_TZ = True
 STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "static"
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "media"
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
@@ -171,7 +169,7 @@ EMAIL_ADMIN = config("EMAIL_ADMIN")
 
 # JWT Config
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(days=14),
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=30),
-    'UPDATE_LAST_LOGIN': True,
+    "ACCESS_TOKEN_LIFETIME": timedelta(days=14),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=30),
+    "UPDATE_LAST_LOGIN": True,
 }

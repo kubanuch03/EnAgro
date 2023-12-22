@@ -70,8 +70,6 @@ class ClientSerializer(serializers.ModelSerializer):
         return client
 
 
-
-
 class LoginClientSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(required=True)
     password = serializers.CharField(write_only=True, required=True)
@@ -125,4 +123,4 @@ class ResetPasswordConfirmSerializer(serializers.Serializer):
 class ClientProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Client
-        fields = ('id', 'username', 'email', 'full_name','avatar')
+        fields = ("id", "username", "email", "full_name", "avatar")
