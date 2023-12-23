@@ -8,7 +8,6 @@ from rest_framework.generics import CreateAPIView, ListAPIView
 from django.shortcuts import get_object_or_404
 
 
-
 class SupportChatCreateView(CreateAPIView):
     queryset = SupportChat.objects.all()
     serializer_class = SupportChatSerializers
