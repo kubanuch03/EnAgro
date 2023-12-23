@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'app_clients',
     'app_complaint',
     'app_chat',
+    'app_support_service',
 ]
 
 
