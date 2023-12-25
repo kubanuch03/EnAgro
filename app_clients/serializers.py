@@ -13,6 +13,7 @@ from django.utils.http import urlsafe_base64_decode
 from rest_framework import serializers
 from .models import Client
 
+from djoser.serializers import serializers
 
 class ClientSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(required=True)
@@ -124,3 +125,8 @@ class ClientProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Client
         fields = ("id", "username", "email", "full_name", "avatar")
+
+
+
+class ConfirmEmailSerializer(serializers.Serializer):
+    key = serializers.CharField()

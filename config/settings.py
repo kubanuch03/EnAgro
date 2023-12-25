@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     "drf_spectacular",
     "corsheaders",
     "drf_yasg",
+    "djoser",
     # app
     "app_category",
     "app_comment",
@@ -62,6 +63,12 @@ REST_FRAMEWORK = {
     ),
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }
+DJOSER = {
+    'SERIALIZERS': {
+        'email_confirmation': 'app_clients.serializers.ConfirmEmailSerializer',
+    },
+}
+
 
 
 MIDDLEWARE = [

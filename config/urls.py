@@ -27,6 +27,9 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("clients/", include("app_clients.urls")),
     path("chat/", include("app_chat.urls")),
+    path("category", include('app_category.urls')),
+    path("products", include('app_products.urls')),
+
     # for doc
     re_path(
         r"^swagger(?P<format>\.json|\.yaml)$",

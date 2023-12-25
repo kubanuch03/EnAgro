@@ -13,6 +13,7 @@ from .serializers import (
     LoginClientSerializer,
     ResetPasswordConfirmSerializer,
     ClientProfileSerializer,
+    ConfirmEmailSerializer
 )
 
 from django.contrib.auth.tokens import default_token_generator
@@ -146,6 +147,8 @@ class LoginClientView(generics.GenericAPIView):
 
 
 class ConfirmEmailView(generics.GenericAPIView):
+    serializer_class = ConfirmEmailSerializer
+
     @staticmethod
     def get(request, token):
         try:
