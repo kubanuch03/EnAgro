@@ -44,7 +44,7 @@ class MessageCreateView(CreateAPIView):
 
     def perform_create(self, serializer):
         message = serializer.save()
-        user_email = message.sender.email
+        user_email = message.recipient.email
         notification.delay(user_email)
         return Response({'message': 'Новые Уведомления'}, status=201)
 

@@ -3,14 +3,6 @@ from django.contrib.auth.models import (
 )
 
 
-
-
-
-
-
-
-
-
 class UserManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
         if not email:

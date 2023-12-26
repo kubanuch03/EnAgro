@@ -11,3 +11,4 @@ Pillow
 celery
 django-redis
 drf-yasg
+twilio

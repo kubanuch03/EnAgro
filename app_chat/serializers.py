@@ -1,4 +1,3 @@
-# serializers.py
 from rest_framework import serializers
 from app_users.models import CustomUser
 from .models import Chat, Message
@@ -13,7 +12,7 @@ class UserSerializer(serializers.ModelSerializer):
 class MessageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Message
-        fields = ['chat', 'sender', 'content']
+        fields = ['chat', 'recipient', 'content']
 
 
 class ChatSerializer(serializers.ModelSerializer):

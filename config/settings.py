@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
-
+import os
 from pathlib import Path
 from decouple import config
 from datetime import timedelta
@@ -25,9 +25,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config("DEBUG")
+DEBUG = True
 
-ALLOWED_HOSTS = ["*", "db"]
+ALLOWED_HOSTS = ['0.0.0.0', '0.0.0.0:8000', '127.0.0.1']
+
+
 
 
 # Application definition
@@ -40,6 +42,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     # lib
+    'twilio',
     "rest_framework",
     "rest_framework_simplejwt",
     "drf_spectacular",
@@ -102,8 +105,12 @@ WSGI_APPLICATION = "config.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "django.db.backends.postgresql",
+        'NAME': 'enagro_db',
+        'USER': 'hello',
+        'PASSWORD': '1',
+        'HOST': '127.0.0.1',
+        'PORT': '5432',
     }
 }
 
@@ -175,3 +182,10 @@ SIMPLE_JWT = {
     'REFRESH_TOKEN_LIFETIME': timedelta(days=30),
     'UPDATE_LAST_LOGIN': True,
 }
+
+TWILIO_SID='AC3484c5eacb24b9534481d8e88b20e55f'
+TWILIO_AUTH_TOKEN='53a4c9f349f534458abb890d75ab72bd'
+TWILIO_SENDER_PHONE='+14322958274'
+
+
+

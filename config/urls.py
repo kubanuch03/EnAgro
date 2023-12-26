@@ -25,6 +25,7 @@ urlpatterns = [
     path("clients/", include('app_clients.urls')),
     path("chat/", include('app_chat.urls')),
     path("support/", include('app_support_service.urls')),
+    # path("registration/", include('app_users.urls')),
 ] 
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
