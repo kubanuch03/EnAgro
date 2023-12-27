@@ -4,13 +4,20 @@ from django.contrib.auth.models import (
 
 
 class UserManager(BaseUserManager):
-    def create_user(self, email, password=None, **extra_fields):
+
+    def create_user(self, email, password, **kwargs):
         if not email:
-            raise ValueError("The Email field must be set")
-        email = self.normalize_email(email)
-        user = self.model(email=email, **extra_fields)
+            return ValueError('Email должен быть обьзателльно передан')
+        email = self.normalize_email(email=email)
+        user = self.model(email=email, **kwargs)
+        user.create_activation_code()
+        phone_number = kwargs.get('phone_number')
+        if phone_number:
+            user.create_phone_number_code()
+        else:
+            user.create_activation_code()
         user.set_password(password)
-        user.save(using=self._db)
+        user.save()
         return user
 
     def create_superuser(self, email, password=None, **extra_fields):

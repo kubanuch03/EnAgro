@@ -11,7 +11,13 @@ from django.shortcuts import get_object_or_404
 from django.utils.http import urlsafe_base64_decode
 
 from rest_framework import serializers
+
+from app_users.send_sms import send_activation_sms
 from .models import Client
+from django.contrib.auth import get_user_model
+
+
+User = get_user_model()
 
 
 class ClientSerializer(serializers.ModelSerializer):
@@ -69,7 +75,10 @@ class ClientSerializer(serializers.ModelSerializer):
 
         return client
 
-
+    # def create_by_phone(self, validated_data):
+    #     user = Client.objects.create_user(**validated_data)
+    #     send_activation_sms(user.phone_number, user.activation_code)
+    #     return user
 
 
 class LoginClientSerializer(serializers.ModelSerializer):
@@ -126,3 +135,38 @@ class ClientProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Client
         fields = ('id', 'username', 'email', 'full_name','avatar')
+
+
+class RegisterPhoneSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Client
+        fields = (
+            "id",
+            "email",
+            "username",
+            "full_name",
+            "phone_number",
+            "password",
+        )
+
+    def create(self, validated_data):
+        user = Client.objects.create_user(**validated_data)
+        send_activation_sms(user.phone_number, user.activation_code)
+        return user
+
+
+class ActivationPhoneSerializer(serializers.Serializer):
+    code = serializers.CharField(required=True)
+
+    def validate(self, attrs):
+        self.code = attrs['code']
+        return attrs
+
+    def save(self, **kwargs):
+        try:
+            user = User.objects.get(activation_code=self.code)
+            user.is_active = True
+            user.activation_code = ''
+            user.save()
+        except:
+            self.fail('неверный код')
