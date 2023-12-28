@@ -14,7 +14,7 @@ from .serializers import (
     ResetPasswordConfirmSerializer,
     ClientProfileSerializer,
     RegisterPhoneSerializer,
-    ActivationPhoneSerializer,
+    ActivationSerializer,
 )
 from rest_framework.generics import CreateAPIView, GenericAPIView
 from django.contrib.auth.tokens import default_token_generator
@@ -232,7 +232,7 @@ class RegistrationPhoneView(CreateAPIView):
 
 
 class ActivationPhoneView(GenericAPIView):
-    serializer_class = ActivationPhoneSerializer
+    serializer_class = ActivationSerializer
 
     def post(self, request):
         serializer = self.get_serializer(data=request.data)

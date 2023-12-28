@@ -13,7 +13,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True)
     username = models.CharField(max_length=20, unique=True, blank=True, null=True)
     full_name = models.CharField(max_length=255, blank=True)
-    phone_number = models.CharField(max_length=25, unique=True, null=True)
+    phone_number = models.CharField(max_length=25, unique=True, null=True, blank=True)
     activation_code = models.CharField(max_length=255, blank=True)
     is_verified = models.BooleanField(default=False)
     avatar = models.ImageField(upload_to="avatar/%Y/%m/%d/", blank=True, null=True)

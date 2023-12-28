@@ -25,7 +25,7 @@ class ClientSerializer(serializers.ModelSerializer):
     username = serializers.CharField(required=True)
     password = serializers.CharField(write_only=True)
     password2 = serializers.CharField(write_only=True)
-    phone_number = serializers.CharField(write_only=True, required=True)
+    phone_number = serializers.CharField(write_only=False, required=False)
     full_name = serializers.CharField(required=True)
 
     class Meta:
@@ -147,6 +147,7 @@ class RegisterPhoneSerializer(serializers.ModelSerializer):
             "full_name",
             "phone_number",
             "password",
+            "password2"
         )
 
     def create(self, validated_data):
@@ -154,8 +155,12 @@ class RegisterPhoneSerializer(serializers.ModelSerializer):
         send_activation_sms(user.phone_number, user.activation_code)
         return user
 
+    def save(self, **kwargs):
+        user = super().save(**kwargs)
+        return user
 
-class ActivationPhoneSerializer(serializers.Serializer):
+
+class ActivationSerializer(serializers.Serializer):
     code = serializers.CharField(required=True)
 
     def validate(self, attrs):
