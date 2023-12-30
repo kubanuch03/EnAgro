@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
-import os
+
 from pathlib import Path
 from decouple import config
 from datetime import timedelta
@@ -25,11 +25,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config("DEBUG")
 
-ALLOWED_HOSTS = ['0.0.0.0', '0.0.0.0:8000', '127.0.0.1']
-
-
+ALLOWED_HOSTS = ["*", "db"]
 
 
 # Application definition
@@ -42,22 +40,21 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     # lib
-    'twilio',
     "rest_framework",
     "rest_framework_simplejwt",
     "drf_spectacular",
     "corsheaders",
-
-
+    "drf_yasg",
+    "djoser",
     # app
-    'app_category',
-    'app_comment',
-    'app_products',
-    'app_users',
-    'app_clients',
-    'app_complaint',
-    'app_chat',
-    'app_support_service',
+    "app_category",
+    "app_comment",
+    "app_products",
+    "app_users",
+    "app_clients",
+    "app_chat",
+    "app_complaint",
+    "app_support_service",
 ]
 
 
@@ -67,6 +64,12 @@ REST_FRAMEWORK = {
     ),
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }
+DJOSER = {
+    'SERIALIZERS': {
+        'email_confirmation': 'app_clients.serializers.ConfirmEmailSerializer',
+    },
+}
+
 
 
 MIDDLEWARE = [
@@ -106,11 +109,11 @@ WSGI_APPLICATION = "config.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        'NAME': 'enagro_db',
-        'USER': 'hello',
-        'PASSWORD': '1',
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
+        "NAME": "enagro_db",
+        "USER": "hello",
+        "PASSWORD": "1",
+        "HOST": "127.0.0.1",
+        "PORT": 5432,
     }
 }
 
@@ -152,8 +155,8 @@ USE_TZ = True
 STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "static"
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "media"
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
@@ -178,14 +181,13 @@ EMAIL_ADMIN = config("EMAIL_ADMIN")
 
 # JWT Config
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(days=14),
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=30),
-    'UPDATE_LAST_LOGIN': True,
+    "ACCESS_TOKEN_LIFETIME": timedelta(days=14),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=30),
+    "UPDATE_LAST_LOGIN": True,
 }
+
+
 
 TWILIO_SID='AC3484c5eacb24b9534481d8e88b20e55f'
 TWILIO_AUTH_TOKEN='030129ca38160752de024ec5b1585287'
 TWILIO_SENDER_PHONE='+17067055308'
-
-
-

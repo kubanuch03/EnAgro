@@ -15,6 +15,7 @@ from .serializers import (
     ClientProfileSerializer,
     RegisterPhoneSerializer,
     ActivationSerializer,
+    ConfirmEmailSerializer,
 )
 from rest_framework.generics import CreateAPIView, GenericAPIView
 from django.contrib.auth.tokens import default_token_generator
@@ -164,6 +165,8 @@ class LoginClientView(generics.GenericAPIView):
 
 
 class ConfirmEmailView(generics.GenericAPIView):
+    serializer_class = ConfirmEmailSerializer
+
     @staticmethod
     def get(request, token):
         try:
@@ -206,9 +209,9 @@ class ClientUpdateView(generics.RetrieveUpdateAPIView):
 class ClientDeleteView(generics.DestroyAPIView):
     queryset = Client.objects.all()
     serializer_class = ClientSerializer
-    permission_classes =  [permissions.IsAdminUser]
+    permission_classes = [permissions.IsAdminUser]
 
-    
+
 class ClientProfileView(generics.RetrieveUpdateAPIView):
     serializer_class = ClientProfileSerializer
     permission_classes = [permissions.IsAuthenticated]
@@ -218,6 +221,7 @@ class ClientProfileView(generics.RetrieveUpdateAPIView):
 
     # def perform_create(self, serializer):
     #     serializer.save(user=self.request.user)
+
 
 
 class RegistrationPhoneView(CreateAPIView):

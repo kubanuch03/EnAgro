@@ -12,3 +12,4 @@ celery
 django-redis
 drf-yasg
 twilio
+djoser

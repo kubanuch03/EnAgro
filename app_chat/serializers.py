@@ -6,13 +6,14 @@ from .models import Chat, Message
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
-        fields = ['username']
+        fields = ["username"]
 
 
 class MessageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Message
-        fields = ['chat', 'recipient', 'content']
+        fields = ['sender', 'chat', 'recipient', 'content']
+
 
 
 class ChatSerializer(serializers.ModelSerializer):
@@ -21,16 +22,16 @@ class ChatSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Chat
-        fields = ['id', 'participants', 'messages']
+        fields = ["id", "participants", "messages"]
 
 
 class CreateMessageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Message
-        fields = '__all__'
+        fields = "__all__"
 
 
 class ChatCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Chat
-        fields = ['participants', 'owner']
+        fields = ["participants", "owner"]

@@ -19,6 +19,7 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
+from djoser.serializers import serializers
 
 class ClientSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(required=True)
@@ -74,7 +75,6 @@ class ClientSerializer(serializers.ModelSerializer):
         make_password(validated_data["password"])
 
         return client
-
     # def create_by_phone(self, validated_data):
     #     user = Client.objects.create_user(**validated_data)
     #     send_activation_sms(user.phone_number, user.activation_code)
@@ -175,3 +175,9 @@ class ActivationSerializer(serializers.Serializer):
             user.save()
         except:
             self.fail('неверный код')
+        fields = ("id", "username", "email", "full_name", "avatar")
+
+
+class ConfirmEmailSerializer(serializers.Serializer):
+    key = serializers.CharField()
+

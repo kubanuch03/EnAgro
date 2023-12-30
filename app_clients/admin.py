@@ -49,6 +49,5 @@ class ClientAdmin(admin.ModelAdmin):
     )
     readonly_fields = ("created_at",)
 
-   
 
 admin.site.register(Client, ClientAdmin)
