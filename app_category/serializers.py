@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Category
+from .models import Category, PodCategory
 
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
@@ -7,3 +7,8 @@ class CategorySerializer(serializers.ModelSerializer):
         fields = ('id', 'name', 'slug', 'img')
         read_only_fields = ('id', 'slug')  # Поля, которые можно только читать
 
+
+class PodCategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PodCategory
+        fields = '__all__'
