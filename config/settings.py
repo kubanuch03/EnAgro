@@ -40,11 +40,13 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     # lib
+    "twilio",
     "rest_framework",
     "rest_framework_simplejwt",
     "drf_spectacular",
     "corsheaders",
     "drf_yasg",
+    "djoser",
     # app
     "app_category",
     "app_comment",
@@ -53,6 +55,7 @@ INSTALLED_APPS = [
     "app_clients",
     "app_chat",
     "app_complaint",
+    "app_support_servise",
 ]
 
 
@@ -61,6 +64,11 @@ REST_FRAMEWORK = {
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ),
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+}
+DJOSER = {
+    "SERIALIZERS": {
+        "email_confirmation": "app_clients.serializers.ConfirmEmailSerializer",
+    },
 }
 
 
@@ -173,3 +181,7 @@ SIMPLE_JWT = {
     "REFRESH_TOKEN_LIFETIME": timedelta(days=30),
     "UPDATE_LAST_LOGIN": True,
 }
+
+TWILIO_SID = config("TWILIO_SID")
+TWILIO_AUTH_TOKEN = config("TWILIO_AUTH_TOKEN")
+TWILIO_SENDER_PHONE = config("TWILIO_SENDER_PHONE")

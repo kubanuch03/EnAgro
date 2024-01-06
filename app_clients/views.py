@@ -3,9 +3,12 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.views import APIView
+from rest_framework.decorators import api_view, permission_classes
+
 
 from django.contrib.auth import login, authenticate
 
+from app_users.send_email import send_confirmation_email
 from .models import Client
 from .permissions import IsClientOrAdmin
 from .serializers import (
@@ -13,8 +16,10 @@ from .serializers import (
     LoginClientSerializer,
     ResetPasswordConfirmSerializer,
     ClientProfileSerializer,
+    RegisterPhoneSerializer,
+    ActivationPhoneSerializer,
 )
-
+from rest_framework.generics import CreateAPIView, GenericAPIView
 from django.contrib.auth.tokens import default_token_generator
 from django.utils.encoding import force_str
 from django.utils.http import urlsafe_base64_encode
@@ -94,9 +99,29 @@ class RegisterClientView(generics.CreateAPIView):
                 "user_id": client.id,
                 "email": client.email,
                 "username": client.username,
+                "phone_number": client.phone_number,
             },
             status=status.HTTP_201_CREATED,
         )
+
+    def email_code(self, request):
+        serializer = RegisterPhoneSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.save()
+        send_confirmation_email(user.email, user.activation_code)
+        if user:
+            print(user, "!!!!")
+            try:
+                send_confirmation_email(user.email, user.activation_code)
+            except:
+                return Response(
+                    {
+                        "message": "Зарегистрировался но на почту код не отправился",
+                        "data": serializer.data,
+                    },
+                    status=201,
+                )
+        return Response(serializer.data, status=201)
 
 
 class LoginClientView(generics.GenericAPIView):
@@ -200,3 +225,18 @@ class ClientProfileView(generics.RetrieveUpdateAPIView):
 
     # def perform_create(self, serializer):
     #     serializer.save(user=self.request.user)
+
+
+class RegistrationPhoneView(CreateAPIView):
+    queryset = Client.objects.all()
+    serializer_class = RegisterPhoneSerializer
+
+
+class ActivationPhoneView(GenericAPIView):
+    serializer_class = ActivationPhoneSerializer
+
+    def post(self, request):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response("Аккаунт успешно активирован", status=status.HTTP_200_OK)

@@ -19,22 +19,29 @@ from django.urls import path, include
 
 from django.conf import settings
 from django.conf.urls.static import static
-from django.urls import path, include, re_path
+from django.urls import path, include
 
-from .yasg import schema_view
+from drf_spectacular.views import (
+    SpectacularAPIView,
+    SpectacularRedocView,
+    SpectacularSwaggerView,
+)
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("clients/", include("app_clients.urls")),
     path("chat/", include("app_chat.urls")),
-    # for doc
-    re_path(
-        r"^swagger(?P<format>\.json|\.yaml)$",
-        schema_view.without_ui(cache_timeout=0),
-        name="schema-json",
+    path("category", include("app_category.urls")),
+    path("products", include("app_products.urls")),
+    path("support/", include("app_support_servise.urls")),
+    # swagger
+    path("api/schema/", SpectacularAPIView.as_view(), name="schema"),
+    path("", SpectacularSwaggerView.as_view(url_name="schema"), name="swagger-ui"),
+    path(
+        "api/schema/redoc/",
+        SpectacularRedocView.as_view(url_name="schema"),
+        name="redoc",
     ),
-    path("", schema_view.with_ui("swagger", cache_timeout=0), name="schema-swagger-ui"),
-    path("redoc/", schema_view.with_ui("redoc", cache_timeout=0), name="schema-redoc"),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

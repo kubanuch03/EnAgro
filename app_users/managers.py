@@ -1,16 +1,23 @@
 from django.contrib.auth.models import (
     BaseUserManager,
 )
+from .send_sms import send_activation_sms
 
 
 class UserManager(BaseUserManager):
-    def create_user(self, email, password=None, **extra_fields):
+    def create_user(self, email, password, **kwargs):
         if not email:
-            raise ValueError("The Email field must be set")
-        email = self.normalize_email(email)
-        user = self.model(email=email, **extra_fields)
+            return ValueError("Email должен быть обьзателльно передан")
+        email = self.normalize_email(email=email)
+        user = self.model(email=email, **kwargs)
+        user.create_activation_code()
+        phone_number = kwargs.get("phone_number")
+        if phone_number:
+            user.create_phone_number_code()
+        else:
+            user.create_activation_code()
         user.set_password(password)
-        user.save(using=self._db)
+        user.save()
         return user
 
     def create_superuser(self, email, password=None, **extra_fields):
@@ -24,10 +31,13 @@ class UserManager(BaseUserManager):
 
         return self.create_user(email, password, **extra_fields)
 
-    def create_manager(self, email, password=None, **extra_fields):
-        extra_fields.setdefault("is_staff", True)
-        return self.create_user(email, password, **extra_fields)
+    def create_client(self, phone_number, password, **kwargs):
+        user = self.model(phone_number=phone_number, **kwargs)
+        user.create_activation_code()
+        user.create_phone_number_code()
+        user.set_password(password)
+        user.save()
 
-    def create_client(self, email, password=None, **extra_fields):
-        extra_fields.setdefault("is_staff", False)
-        return self.create_user(email, password, **extra_fields)
+        # Отправка SMS-подтверждения
+        send_activation_sms(phone_number, user.phone_number_code)
+        return user
