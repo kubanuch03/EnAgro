@@ -191,3 +191,8 @@ class ActivationSerializer(serializers.Serializer):
 
 class ConfirmEmailSerializer(serializers.Serializer):
     key = serializers.CharField()
+
+
+
+class PasswordResetSerializer(serializers.Serializer):
+    email = serializers.EmailField()

@@ -5,15 +5,22 @@ from .models import Product
 from .permissions import IsSellerOfProduct
 
 from rest_framework import status
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAdminUser
 from rest_framework import generics
 from rest_framework.response import Response
+from rest_framework.generics import CreateAPIView, ListAPIView
 
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter, OrderingFilter
 
 
-class ProductListCreateView(generics.ListCreateAPIView):
+class ProductCreateApiView(CreateAPIView):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+    permission_classes = [IsAdminUser,]
+
+
+class ProductListApiView(ListAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     permission_classes = (AllowAny,)
@@ -21,10 +28,10 @@ class ProductListCreateView(generics.ListCreateAPIView):
     filterset_fields = ["category", "podcategory", "user", "price", "available"]
     search_fields = ["name", "description"]
     ordering_fields = ["name", "price"]
-    permission_classes = (AllowAny,)
+    permission_classes = [AllowAny,]
 
     def get_queryset(self):
-        query = self.request.query_params.get("q", "")
+        query = self.request.query_params.get("search", "")
         min_price = self.request.query_params.get("min_price", None)
         max_price = self.request.query_params.get("max_price", None)
         start_date = self.request.query_params.get("start_date", None)
@@ -56,4 +63,4 @@ class ProductListCreateView(generics.ListCreateAPIView):
 class ProductDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
-    permission_classes = IsSellerOfProduct
+    permission_classes = [IsSellerOfProduct,]

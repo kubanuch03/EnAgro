@@ -1,14 +1,21 @@
-from rest_framework import generics
-from .models import Category, PodCategory
+from rest_framework.generics import ListAPIView, CreateAPIView
+from app_category.models import Category, PodCategory
 from .serializers import CategorySerializer, PodCategorySerializer
 from rest_framework.viewsets import ModelViewSet
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAdminUser
+from rest_framework import generics
 
 
-# Представление для получения списка и создания новых категорий
-class CategoryListCreateView(generics.ListCreateAPIView):
+class CategoryCreateApiView(CreateAPIView):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
+    permission_classes = [IsAdminUser, ]
+
+
+class CategoryListView(ListAPIView):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+    permission_classes = [AllowAny, ]
     filterset_fields = ["name"]
     search_fields = ["name"]
     ordering_fields = ["name"]
@@ -22,6 +29,7 @@ class CategoryListCreateView(generics.ListCreateAPIView):
 class CategoryDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
+    permission_classes = [IsAdminUser, ]
 
 
 # Представление для получения списка и создания новых продуктов

@@ -5,21 +5,25 @@ from rest_framework import serializers
 from .task import notification
 from .models import Chat, Message
 from .serializers import ChatSerializer, MessageSerializer, ChatCreateSerializer
+from rest_framework.permissions import IsAuthenticated
 
 
 class ChatListView(ListAPIView):
     queryset = Chat.objects.all()
     serializer_class = ChatSerializer
+    permission_classes = [IsAuthenticated, ]
 
 
 class ChatCreateView(CreateAPIView):
     queryset = Chat.objects.all()
     serializer_class = ChatCreateSerializer
+    permission_classes = [IsAuthenticated, ]
 
 
 class MessageCreateView(CreateAPIView):
     queryset = Message.objects.all()
     serializer_class = MessageSerializer
+    permission_classes = [IsAuthenticated, ]
 
     def perform_create(self, serializer):
         message = serializer.save()
@@ -46,3 +50,4 @@ class MessageCreateView(CreateAPIView):
 class MessageListView(ListAPIView):
     queryset = Message.objects.all()
     serializer_class = MessageSerializer
+    permission_classes = [IsAuthenticated, ]
