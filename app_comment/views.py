@@ -9,14 +9,18 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 
 
+
+
 class CreateCommentView(GenericAPIView):
     """
-    create new comment for product
+        create new comment for product
     """
 
     serializer_class = CommentSerializer
 
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (
+        IsAuthenticated,
+    )
 
     def post(self, request):
         srz_data = self.serializer_class(data=request.data)
@@ -29,16 +33,19 @@ class CreateCommentView(GenericAPIView):
                 data={"message": "comment created success"},
                 status=status.HTTP_201_CREATED,
             )
+           
 
 
 class CommentListView(GenericAPIView):
     """
-    show list of confirmed comments
+        show list of confirmed comments
     """
 
     serializer_class = CommentSerializer
     queryset = Comment.confirmed.all()
-    permission_classes = (AllowAny,)
+    permission_classes = (
+        AllowAny,
+    )
 
     def get(self, request):
         comments = Comment.confirmed.all()

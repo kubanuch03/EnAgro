@@ -1,12 +1,12 @@
-from rest_framework import generics
+from datetime import datetime
+
 from .serializers import ProductSerializer
 from .models import Product
-
-from datetime import datetime
 from .permissions import IsSellerOfProduct
 
 from rest_framework import status
 from rest_framework.permissions import AllowAny
+from rest_framework import generics
 from rest_framework.response import Response
 
 
@@ -26,3 +26,4 @@ class ProductDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     permission_classes = IsSellerOfProduct
+

@@ -20,11 +20,10 @@ class Comment(models.Model):
         on_delete=models.CASCADE,
         related_name="comments",
     )
-
     sub_comment = models.ForeignKey(
-        "self",
+        'self',
         on_delete=models.CASCADE,
-        related_name="subcomments",
+        related_name='subcomments',
         null=True,
         blank=True,
     )
@@ -41,6 +40,7 @@ class Comment(models.Model):
         return self.body[:20]
 
     def save(self, *args, **kwargs):
+
         if self.sub_comment:
             self.is_sub = True
 

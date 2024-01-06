@@ -14,6 +14,7 @@ class Category(models.Model):
         verbose_name = "category"
         verbose_name_plural = "categories"
 
+
     def __str__(self):
         return self.name
 
