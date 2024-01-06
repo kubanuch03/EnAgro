@@ -1,0 +1,15 @@
+﻿black==23.11.0
+Django==4.2.8
+django-cors-headers==4.3.1
+djangorestframework==3.14.0
+djangorestframework-simplejwt==5.3.1
+drf-spectacular==0.26.5
+psycopg2-binary==2.9.9
+PyJWT==2.8.0
+python-decouple==3.8
+Pillow
+celery
+django-redis
+drf-yasg
+twilio
+djoser

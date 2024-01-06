@@ -27,6 +27,21 @@ class MessageCreateView(CreateAPIView):
         notification.delay(user_email)
         return Response({"message": "Новые Уведомления"}, status=201)
 
+    # def perform_create(self, serializer):
+    #     chat_id = self.kwargs.get('chat_id')
+    #     chat = get_object_or_404(Chat, id=chat_id)
+    #     sender_id = self.request.data.get('sender_id')
+    #     content = self.request.data.get('content')
+    #
+    #     if not sender_id or not content:
+    #         return Response({'error : Для отправки сообщения необходимы идентификатор отправителя и контент.'},
+    #                         status=status.HTTP_400_BAD_REQUEST)
+    #
+    #     sender = get_object_or_404(CustomUser, id=sender_id)
+    #
+    #     message = serializer.save(chat=chat, sender=sender, content=content)
+    #     return Response(MessageSerializer(message).data, status=status.HTTP_201_CREATED)
+
 
 class MessageListView(ListAPIView):
     queryset = Message.objects.all()

@@ -14,4 +14,3 @@ EXPOSE 80
 #
 #RUN apt-get update && apt-get install -y procps
 #RUN mkdir -p /home/app/staticfiles
-#RUN chmod -R 755 /home/app/staticfiles

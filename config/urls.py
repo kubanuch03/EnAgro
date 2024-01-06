@@ -31,9 +31,10 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("clients/", include("app_clients.urls")),
     path("chat/", include("app_chat.urls")),
+    # path("registration/", include('app_users.urls')),
+    path("support/", include("app_support_servise.urls")),
     path("category", include("app_category.urls")),
     path("products", include("app_products.urls")),
-    path("support/", include("app_support_servise.urls")),
     # swagger
     path("api/schema/", SpectacularAPIView.as_view(), name="schema"),
     path("", SpectacularSwaggerView.as_view(url_name="schema"), name="swagger-ui"),
@@ -42,8 +43,6 @@ urlpatterns = [
         SpectacularRedocView.as_view(url_name="schema"),
         name="redoc",
     ),
-    path("category", include("app_category.urls")),
-    path("products", include("app_products.urls")),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

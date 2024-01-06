@@ -7,13 +7,14 @@ from django.core.validators import RegexValidator
 from django.utils.crypto import get_random_string
 
 from .managers import UserManager
+import uuid
 
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True)
     username = models.CharField(max_length=20, unique=True, blank=True, null=True)
     full_name = models.CharField(max_length=255, blank=True)
-    phone_number = models.CharField(max_length=25, unique=True, null=True)
+    phone_number = models.CharField(max_length=25, unique=True, null=True, blank=True)
     activation_code = models.CharField(max_length=255, blank=True)
     is_verified = models.BooleanField(default=False)
     avatar = models.ImageField(upload_to="avatar/%Y/%m/%d/", blank=True, null=True)
@@ -31,12 +32,12 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         return f"{self.username}"
 
     def create_activation_code(self):
-        import uuid
-
         code = str(uuid.uuid4())
         self.activation_code = code
 
     def create_phone_number_code(self):
         code = get_random_string(6, allowed_chars="123456789")
         self.phone_number_code = code
+        code = get_random_string(6, allowed_chars="123456789")
+        self.activation_code = code
         return code

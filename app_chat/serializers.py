@@ -12,7 +12,7 @@ class UserSerializer(serializers.ModelSerializer):
 class MessageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Message
-        fields = ["chat", "sender", "content"]
+        fields = ["sender", "chat", "recipient", "content"]
 
 
 class ChatSerializer(serializers.ModelSerializer):
