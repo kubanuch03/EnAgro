@@ -12,7 +12,6 @@ from django.utils.http import urlsafe_base64_decode
 
 from rest_framework import serializers
 
-from app_users.send_sms import send_activation_sms
 from .models import Client
 from django.contrib.auth import get_user_model
 
@@ -20,6 +19,10 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 
 from djoser.serializers import serializers
+
+
+class ConfirmEmailSerializer(serializers.Serializer):
+    token = serializers.CharField()
 
 class ClientSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(required=True)

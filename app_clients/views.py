@@ -16,6 +16,8 @@ from .serializers import (
     LoginClientSerializer,
     ResetPasswordConfirmSerializer,
     ClientProfileSerializer,
+    ClientSerializer,
+    ConfirmEmailSerializer
 
 )
 from rest_framework.generics import CreateAPIView, GenericAPIView
@@ -98,30 +100,9 @@ class RegisterClientView(generics.CreateAPIView):
                 "user_id": client.id,
                 "email": client.email,
                 "username": client.username,
-                "phone_number": client.phone_number,
             },
             status=status.HTTP_201_CREATED,
         )
-
-    def email_code(self, request):
-        serializer = RegisterPhoneSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        user = serializer.save()
-        send_confirmation_email(user.email, user.activation_code)
-        if user:
-            print(user, "!!!!")
-            try:
-                send_confirmation_email(user.email, user.activation_code)
-            except:
-                return Response(
-                    {
-                        "message": "Зарегистрировался но на почту код не отправился",
-                        "data": serializer.data,
-                    },
-                    status=201,
-                )
-        return Response(serializer.data, status=201)
-
 
 class LoginClientView(generics.GenericAPIView):
     serializer_class = LoginClientSerializer
@@ -228,16 +209,4 @@ class ClientProfileView(generics.RetrieveUpdateAPIView):
     #     serializer.save(user=self.request.user)
 
 
-class RegistrationPhoneView(CreateAPIView):
-    queryset = Client.objects.all()
-    serializer_class = RegisterPhoneSerializer
 
-
-class ActivationPhoneView(GenericAPIView):
-    serializer_class = ActivationPhoneSerializer
-
-    def post(self, request):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        return Response("Аккаунт успешно активирован", status=status.HTTP_200_OK)
