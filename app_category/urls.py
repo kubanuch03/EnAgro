@@ -6,4 +6,3 @@ urlpatterns = [
     path("categories/<int:pk>/", CategoryDetailView.as_view(), name="category-detail"),
     # Другие URL, если необходимо
 ]
-

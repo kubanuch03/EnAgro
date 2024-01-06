@@ -24,6 +24,7 @@ from djoser.serializers import serializers
 class ConfirmEmailSerializer(serializers.Serializer):
     token = serializers.CharField()
 
+
 class ClientSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(required=True)
     username = serializers.CharField(required=True)
@@ -139,4 +140,3 @@ class ClientProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Client
         fields = ("id", "username", "email", "full_name", "avatar")
-

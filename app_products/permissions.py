@@ -6,8 +6,7 @@ class IsAnonymoused(BasePermission):
     Allows access only to not authenticated users.
     """
 
-
-    message = 'permission denied, at first you must logout'
+    message = "permission denied, at first you must logout"
 
     def has_permission(self, request, view):
         return bool(request.user.is_anonymous)
@@ -19,7 +18,6 @@ class IsSeller(BasePermission):
     """
 
     message = "permission denied, you are not seller user"
-
 
     def has_permission(self, request, view):
         return request.user.is_authenticated and request.user
@@ -51,9 +49,6 @@ class IsSellerOfProduct(BasePermission):
     """
     Allow access only user that seller of product
     """
-
- 
-
 
     def has_permission(self, request, view):
         return request.user.is_authenticated and request.user

@@ -10,16 +10,16 @@ app_name = "clients"
 
 
 urlpatterns = [
-    path(
-        "activate/code/",
-        ActivationPhoneView.as_view(),
-        name="activation_code_phone_number",
-    ),
-    path(
-        "register/phone/client/",
-        RegistrationPhoneView.as_view(),
-        name="register_client_phone",
-    ),
+    # path(
+    #     "activate/code/",
+    #     ActivationPhoneView.as_view(),
+    #     name="activation_code_phone_number",
+    # ),
+    # path(
+    #     "register/phone/client/",
+    #     RegistrationPhoneView.as_view(),
+    #     name="register_client_phone",
+    # ),
     path("list/client/", ClientListView.as_view(), name="list_client"),
     path("update/client/<int:pk>/", ClientUpdateView.as_view(), name="update_client"),
     path("delete/client/<int:pk>/", ClientDeleteView.as_view(), name="delete_client"),

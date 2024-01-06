@@ -1,4 +1,3 @@
-
 from rest_framework import serializers
 from .models import Product
 
@@ -26,7 +25,23 @@ class ProductSerializer(serializers.ModelSerializer):
             "created",
             "updated",
         )  # Поля, которые можно только читать
-        fields = ('id', 'category', 'user', 'name', 'slug', 'image', 'description', 'price', 'available', 'created', 'updated')
-        read_only_fields = ('id', 'slug', 'user', 'created', 'updated')  # Поля, которые можно только читать
-
-
+        fields = (
+            "id",
+            "category",
+            "user",
+            "name",
+            "slug",
+            "image",
+            "description",
+            "price",
+            "available",
+            "created",
+            "updated",
+        )
+        read_only_fields = (
+            "id",
+            "slug",
+            "user",
+            "created",
+            "updated",
+        )  # Поля, которые можно только читать

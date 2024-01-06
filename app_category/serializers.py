@@ -7,4 +7,3 @@ class CategorySerializer(serializers.ModelSerializer):
         model = Category
         fields = ("id", "name", "slug", "img")
         read_only_fields = ("id", "slug")  # Поля, которые можно только читать
-

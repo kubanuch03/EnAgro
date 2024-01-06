@@ -17,8 +17,7 @@ from .serializers import (
     ResetPasswordConfirmSerializer,
     ClientProfileSerializer,
     ClientSerializer,
-    ConfirmEmailSerializer
-
+    ConfirmEmailSerializer,
 )
 from rest_framework.generics import CreateAPIView, GenericAPIView
 from django.contrib.auth.tokens import default_token_generator
@@ -103,6 +102,7 @@ class RegisterClientView(generics.CreateAPIView):
             },
             status=status.HTTP_201_CREATED,
         )
+
 
 class LoginClientView(generics.GenericAPIView):
     serializer_class = LoginClientSerializer
@@ -207,6 +207,3 @@ class ClientProfileView(generics.RetrieveUpdateAPIView):
 
     # def perform_create(self, serializer):
     #     serializer.save(user=self.request.user)
-
-
-

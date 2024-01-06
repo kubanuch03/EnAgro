@@ -2,7 +2,6 @@ from rest_framework import serializers
 from .models import Comment
 
 
-
 class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
@@ -17,14 +16,14 @@ class CommentSerializer(serializers.ModelSerializer):
         read_only_fields = (
             "writer",
             "register_date",
-            'writer',
-            'product',
-            'sub_comment',
-            'body',
-            'register_date',
+            "writer",
+            "product",
+            "sub_comment",
+            "body",
+            "register_date",
         )
 
         read_only_fields = (
-            'writer',
-            'register_date',
+            "writer",
+            "register_date",
         )
