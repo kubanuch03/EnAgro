@@ -44,8 +44,8 @@ INSTALLED_APPS = [
     "rest_framework",
     "rest_framework_simplejwt",
     "drf_spectacular",
-    "django_filters",
     "corsheaders",
+    "django_filters",
     "drf_yasg",
     "djoser",
     # app
@@ -110,8 +110,12 @@ WSGI_APPLICATION = "config.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "trader_db",
+        "USER": "hello",
+        "PSSWORD": "1",
+        "HOST": "127.0.0.1",
+        "PORT": "5432",
     }
 }
 

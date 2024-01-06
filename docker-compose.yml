@@ -10,7 +10,7 @@ services:
       - static_volume:/usr/src/app/static
       - media_volume:/usr/src/app/media
     ports:
-      - "8000:8000"
+      - "80:8000"
     depends_on:
       - db
       - redis
