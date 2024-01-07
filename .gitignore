@@ -2,7 +2,7 @@
 # Edit at https://www.toptal.com/developers/gitignore?templates=macos,visualstudiocode,python,django,virtualenv
 
 ### Django ###
-.env
+# .env
 venv
 *.log
 *.pot

@@ -12,10 +12,14 @@ from rest_framework.permissions import IsAuthenticated
 class SupportChatCreateView(CreateAPIView):
     queryset = SupportChat.objects.all()
     serializer_class = SupportChatSerializers
-    permission_classes = [IsAuthenticated, ]
+    permission_classes = [
+        IsAuthenticated,
+    ]
 
 
 class SupportChatListView(ListAPIView):
     queryset = SupportChat.objects.all()
     serializer_class = SupportChatSerializers
-    permission_classes = [IsAuthenticated, ]
+    permission_classes = [
+        IsAuthenticated,
+    ]

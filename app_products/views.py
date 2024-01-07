@@ -17,7 +17,9 @@ from rest_framework.filters import SearchFilter, OrderingFilter
 class ProductCreateApiView(CreateAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
-    permission_classes = [IsAdminUser,]
+    permission_classes = [
+        IsAdminUser,
+    ]
 
 
 class ProductListApiView(ListAPIView):
@@ -28,7 +30,9 @@ class ProductListApiView(ListAPIView):
     filterset_fields = ["category", "podcategory", "user", "price", "available"]
     search_fields = ["name", "description"]
     ordering_fields = ["name", "price"]
-    permission_classes = [AllowAny,]
+    permission_classes = [
+        AllowAny,
+    ]
 
     def get_queryset(self):
         query = self.request.query_params.get("search", "")
@@ -63,4 +67,6 @@ class ProductListApiView(ListAPIView):
 class ProductDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
-    permission_classes = [IsSellerOfProduct,]
+    permission_classes = [
+        IsSellerOfProduct,
+    ]

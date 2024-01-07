@@ -73,7 +73,31 @@ DJOSER = {
     },
 }
 
+SPECTACULAR_SETTINGS = {
+    "TITILE": "BLOG APIS",
+    "DESCRIPTION": "Simple blog app in rest framework",
+    "VERSION": "1.0",
+}
 
+
+CORS_ALLOW_METHODS = [
+    "GET",
+    "POST",
+    "PUT",
+    "PATCH",
+    "DELETE",
+    "OPTIONS",
+]
+
+CORS_ALLOWED_ORIGINS = [
+    "http://161.35.113.88:8000",
+    "http://localhost:3000",
+]
+
+CORS_ALLOW_ORIGINS = [
+    "http://localhost:3000",
+    "http://161.35.113.88:8000",
+]
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -111,11 +135,11 @@ WSGI_APPLICATION = "config.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "trader_db",
-        "USER": "hello",
-        "PSSWORD": "1",
-        "HOST": "127.0.0.1",
-        "PORT": "5432",
+        "NAME": config("POSTGRES_DB"),
+        "USER": config("POSTGRES_USER"),
+        "PASSWORD": config("POSTGRES_PASSWORD"),
+        "HOST": config("POSTGRES_HOST"),
+        "PORT": config("POSTGRES_PORT"),
     }
 }
 

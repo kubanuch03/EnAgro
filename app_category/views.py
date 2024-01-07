@@ -9,13 +9,17 @@ from rest_framework import generics
 class CategoryCreateApiView(CreateAPIView):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
-    permission_classes = [IsAdminUser, ]
+    permission_classes = [
+        IsAdminUser,
+    ]
 
 
 class CategoryListView(ListAPIView):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
-    permission_classes = [AllowAny, ]
+    permission_classes = [
+        AllowAny,
+    ]
     filterset_fields = ["name"]
     search_fields = ["name"]
     ordering_fields = ["name"]
@@ -29,7 +33,9 @@ class CategoryListView(ListAPIView):
 class CategoryDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
-    permission_classes = [IsAdminUser, ]
+    permission_classes = [
+        IsAdminUser,
+    ]
 
 
 # Представление для получения списка и создания новых продуктов

@@ -12,10 +12,14 @@ from django.shortcuts import get_object_or_404
 class SupportChatCreateView(CreateAPIView):
     queryset = SupportChat.objects.all()
     serializer_class = SupportChatSerializers
-    permission_classes = [IsAuthenticated, ]
+    permission_classes = [
+        IsAuthenticated,
+    ]
 
 
 class SupportChatListView(ListAPIView):
     queryset = SupportChat.objects.all()
     serializer_class = SupportChatSerializers
-    permission_classes = [IsAuthenticated, ]
+    permission_classes = [
+        IsAuthenticated,
+    ]

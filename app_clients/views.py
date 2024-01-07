@@ -20,7 +20,7 @@ from .serializers import (
     RegisterPhoneSerializer,
     ActivationSerializer,
     ConfirmEmailSerializer,
-    PasswordResetSerializer
+    PasswordResetSerializer,
 )
 from rest_framework.generics import CreateAPIView, GenericAPIView
 from django.contrib.auth.tokens import default_token_generator
@@ -34,7 +34,9 @@ from django.views.decorators.csrf import csrf_exempt
 
 class RequestPasswordResetView(APIView):
     serializer_class = PasswordResetSerializer
-    permission_classes = [AllowAny, ]
+    permission_classes = [
+        AllowAny,
+    ]
 
     @csrf_exempt
     def post(self, request, *args, **kwargs):
@@ -67,8 +69,9 @@ class RequestPasswordResetView(APIView):
 
 class ResetPasswordConfirmView(generics.GenericAPIView):
     serializer_class = ResetPasswordConfirmSerializer
-    permission_classes = [AllowAny, ]
-
+    permission_classes = [
+        AllowAny,
+    ]
 
     @csrf_exempt
     def post(self, request, *args, **kwargs):
@@ -91,7 +94,9 @@ class ResetPasswordConfirmView(generics.GenericAPIView):
 class RegisterClientView(generics.CreateAPIView):
     queryset = Client.objects.all()
     serializer_class = ClientSerializer
-    permission_classes = [AllowAny, ]
+    permission_classes = [
+        AllowAny,
+    ]
 
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
@@ -131,7 +136,9 @@ class RegisterClientView(generics.CreateAPIView):
 
 class LoginClientView(generics.GenericAPIView):
     serializer_class = LoginClientSerializer
-    permission_classes = [AllowAny, ]
+    permission_classes = [
+        AllowAny,
+    ]
 
     def post(self, request, *args, **kwargs):
         email = request.data.get("email", None)
@@ -208,24 +215,32 @@ class ConfirmEmailView(generics.GenericAPIView):
 class ClientListView(generics.ListAPIView):
     queryset = Client.objects.all()
     serializer_class = ClientSerializer
-    permission_classes = [permissions.IsAdminUser, ]
+    permission_classes = [
+        permissions.IsAdminUser,
+    ]
 
 
 class ClientUpdateView(generics.RetrieveUpdateAPIView):
     queryset = Client.objects.all()
     serializer_class = ClientSerializer
-    permission_classes = [IsClientOrAdmin, ]
+    permission_classes = [
+        IsClientOrAdmin,
+    ]
 
 
 class ClientDeleteView(generics.DestroyAPIView):
     queryset = Client.objects.all()
     serializer_class = ClientSerializer
-    permission_classes = [permissions.IsAdminUser, ]
+    permission_classes = [
+        permissions.IsAdminUser,
+    ]
 
 
 class ClientProfileView(generics.RetrieveUpdateAPIView):
     serializer_class = ClientProfileSerializer
-    permission_classes = [permissions.IsAuthenticated, ]
+    permission_classes = [
+        permissions.IsAuthenticated,
+    ]
 
     def get_object(self):
         return self.request.user
