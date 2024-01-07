@@ -111,10 +111,10 @@ WSGI_APPLICATION = "config.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "trader_db",
+        "NAME": "enagro_db",
         "USER": "hello",
-        "PSSWORD": "1",
-        "HOST": "127.0.0.1",
+        "PASSWORD": "1",  
+        "HOST": "localhost",
         "PORT": "5432",
     }
 }
