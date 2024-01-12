@@ -6,3 +6,5 @@ urlpatterns = [
     path("product/create/", ProductCreateApiView.as_view(), name="product-create"),
     path("products/<int:pk>/", ProductDetailView.as_view(), name="product-detail"),
 ]
+
+

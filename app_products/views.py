@@ -63,10 +63,10 @@ class ProductListApiView(ListAPIView):
     #     return Response(data=srz_data.data, status=status.HTTP_200_OK)
 
 
+
 # Представление для получения деталей, обновления и удаления продукта
 class ProductDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     permission_classes = [
-        IsSellerOfProduct,
-    ]
+        IsSellerOfProduct,]

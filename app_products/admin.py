@@ -25,10 +25,12 @@ class PriceFilter(admin.SimpleListFilter):
             return queryset.filter(price__gt=5000)
 
 
+
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ["name", "slug", "price", "available", "created", "updated"]
-    list_filter = ["available", "created", "updated", PriceFilter]
-    list_editable = ["price", "available"]
-    prepopulated_fields = {"slug": ("name",)}
-    search_fields = ["name"]
+    list_display = ['name', 'slug', 'price',
+    'available', 'created', 'updated','location','rating']
+    list_filter = ['available', 'created', 'updated']
+    list_editable = ['price', 'available']
+    prepopulated_fields = {'slug': ('name',)}
+
