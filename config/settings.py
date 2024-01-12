@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     "app_products",
     "app_users",
     "app_clients",
+    'app_like',
     "app_chat",
     "app_complaint",
     "app_support_servise",

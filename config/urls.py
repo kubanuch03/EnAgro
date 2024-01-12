@@ -30,6 +30,7 @@ from drf_spectacular.views import (
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("clients/", include("app_clients.urls")),
+    path('like/', include('app_like.urls')),
     path("chat/", include("app_chat.urls")),
     # path("registration/", include('app_users.urls')),
     path("support/", include("app_support_servise.urls")),

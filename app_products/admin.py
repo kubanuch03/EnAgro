@@ -30,7 +30,7 @@ class PriceFilter(admin.SimpleListFilter):
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ["name", "slug", "price", "available", "created", "updated"]
+    list_display = ["id","name", "slug", "price", "available", "created", "updated"]
     list_filter = ["available", "created", "updated", PriceFilter]
     list_editable = ["price", "available"]
     prepopulated_fields = {"slug": ("name",)}
