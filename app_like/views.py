@@ -17,10 +17,6 @@ class LikeView(GenericAPIView):
     permission_classes = (IsAuthenticated,)
 
 
-    def get(self, request):
-        likes = Like.objects.filter(user=request.user)
-        serializer = self.serializer_class(likes, many=True)
-        return Response(serializer.data)
 
     def post(self, request):
         srz_data = self.serializer_class(data=request.data)
