@@ -6,3 +6,4 @@ urlpatterns = [
     # path('dislike/', DisLikeView.as_view(), name='dislike-product'),
     # path('favorite/products/', FavoriteProductsView.as_view(), name='favorite-products'),
 ]
+#add
