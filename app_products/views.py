@@ -21,6 +21,9 @@ class ProductCreateApiView(CreateAPIView):
         IsAdminUser,
     ]
 
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
 
 class ProductListApiView(ListAPIView):
     queryset = Product.objects.all()

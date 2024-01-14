@@ -4,8 +4,7 @@ RUN rm /etc/nginx/conf.d/default.conf
 
 COPY nginx/default.conf /etc/nginx/conf.d/
 
-EXPOSE 80
-#
+
 #RUN mkdir -p /usr/src/app/static
 #RUN chmod -R 755 /usr/src/app/static
 

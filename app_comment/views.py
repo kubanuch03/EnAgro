@@ -44,3 +44,15 @@ class CommentListView(GenericAPIView):
         comments = Comment.confirmed.all()
         srz_data = self.serializer_class(instance=comments, many=True)
         return Response(data=srz_data.data, status=status.HTTP_200_OK)
+
+
+
+
+
+
+
+
+
+
+
+

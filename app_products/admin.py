@@ -2,6 +2,9 @@ from django.contrib import admin
 from .models import Product
 
 
+
+
+
 class PriceFilter(admin.SimpleListFilter):
     title = "Price Range"
     parameter_name = "price"
@@ -25,12 +28,10 @@ class PriceFilter(admin.SimpleListFilter):
             return queryset.filter(price__gt=5000)
 
 
-
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ['name', 'slug', 'price',
-    'available', 'created', 'updated','location','rating']
-    list_filter = ['available', 'created', 'updated']
-    list_editable = ['price', 'available']
-    prepopulated_fields = {'slug': ('name',)}
-
+    list_display = ["id","name", "slug", "price", "available", "created", "updated"]
+    list_filter = ["available", "created", "updated", PriceFilter]
+    list_editable = ["price", "available"]
+    prepopulated_fields = {"slug": ("name",)}
+    search_fields = ["name"]

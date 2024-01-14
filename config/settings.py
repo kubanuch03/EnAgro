@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     "app_products",
     "app_users",
     "app_clients",
+    'app_like',
     "app_chat",
     "app_complaint",
     "app_support_servise",
@@ -135,11 +136,19 @@ WSGI_APPLICATION = "config.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
+<<<<<<< HEAD
         "NAME": config("POSTGRES_DB"),
         "USER": config("POSTGRES_USER"),
         "PASSWORD": config("POSTGRES_PASSWORD"),
         "HOST": config("POSTGRES_HOST"),
         "PORT": config("POSTGRES_PORT"),
+=======
+        "NAME": "enagro_db",
+        "USER": "hello",
+        "PASSWORD": "1",  
+        "HOST": "localhost",
+        "PORT": "5432",
+>>>>>>> 68af60dc5ff229e41ad615b7f20b9acb8c9b3da6
     }
 }
 # DATABASES = {

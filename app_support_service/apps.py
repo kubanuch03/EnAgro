@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class AppSupportServiceConfig(AppConfig):
+class AppSupportServiseConfig(AppConfig):
     default_auto_field = "django.db.models.BigAutoField"
-    name = "app_support_service"
+    name = "app_support_servise"
