@@ -3,7 +3,7 @@ from rest_framework.routers import DefaultRouter
 from app_products.views import ProductDetailView, ProductListApiView, ProductCreateApiView, RetingViewSet
 
 router = DefaultRouter()
-router.register(r'rating/product/', RetingViewSet, basename='rating')
+router.register(r'rating/product', RetingViewSet, basename='rating')
 
 
 urlpatterns = [

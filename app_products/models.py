@@ -2,7 +2,7 @@ from datetime import datetime
 
 from django.db import models
 from django.conf import settings
-
+from app_clients.models import Client
 
 from app_category.models import Category, PodCategory
 from .manager import ConfirmedCommentManager
@@ -55,6 +55,7 @@ class Product(models.Model):
     
 
 class RatingProduct(models.Model):
+    author = models.ForeignKey(Client, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     RATING = (
         (1, '⭐️'),
