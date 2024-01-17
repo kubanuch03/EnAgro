@@ -9,13 +9,13 @@ from .manager import ConfirmedCommentManager
 
 
 class Product(models.Model):
-    RATING = (
-        (1, '⭐️'),
-        (2, '⭐️⭐️'),
-        (3, '⭐️⭐️⭐️'),
-        (4, '⭐️⭐️⭐️⭐️'),
-        (5, '⭐️⭐️⭐️⭐️⭐️'),
-    )
+    # RATING = (
+    #     (1, '⭐️'),
+    #     (2, '⭐️⭐️'),
+    #     (3, '⭐️⭐️⭐️'),
+    #     (4, '⭐️⭐️⭐️⭐️'),
+    #     (5, '⭐️⭐️⭐️⭐️⭐️'),
+    # )
     category = models.ForeignKey(
         Category, related_name="products", on_delete=models.CASCADE
     )
@@ -30,7 +30,7 @@ class Product(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2)
     available = models.BooleanField(default=True)
     location = models.CharField(max_length=100, blank=True)
-    rating = models.IntegerField(choices=RATING, blank=True, null=True)
+    # rating = models.IntegerField(choices=RATING, blank=True, null=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
@@ -52,3 +52,15 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+    
+
+class RatingProduct(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    RATING = (
+        (1, '⭐️'),
+        (2, '⭐️⭐️'),
+        (3, '⭐️⭐️⭐️'),
+        (4, '⭐️⭐️⭐️⭐️'),
+        (5, '⭐️⭐️⭐️⭐️⭐️'),
+    )
+    rating = models.IntegerField(choices=RATING, blank=True, null=True)

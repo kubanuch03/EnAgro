@@ -1,9 +1,10 @@
 from datetime import datetime
 
-from .serializers import ProductSerializer
-from .models import Product
+from .serializers import ProductSerializer, RatingSerializers
+from app_products.models import Product, RatingProduct
 from .permissions import IsSellerOfProduct
-
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.viewsets import ModelViewSet
 from rest_framework import status
 from rest_framework.permissions import AllowAny, IsAdminUser
 from rest_framework import generics
@@ -67,3 +68,9 @@ class ProductDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     permission_classes = [IsSellerOfProduct,]
+
+
+class RetingViewSet(ModelViewSet):
+    queryset = RatingProduct.objects.all()
+    serializer_class = RatingSerializers
+    permission_classes = [IsAuthenticated, ]

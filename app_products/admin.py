@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Product
+from .models import Product, RatingProduct
 
 
 
@@ -35,3 +35,5 @@ class ProductAdmin(admin.ModelAdmin):
     list_editable = ["price", "available"]
     prepopulated_fields = {"slug": ("name",)}
     search_fields = ["name"]
+
+admin.site.register(RatingProduct)

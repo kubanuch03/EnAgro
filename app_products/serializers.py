@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Product
+from app_products.models import Product, RatingProduct
 
 
 class ProductSerializer(serializers.ModelSerializer):
@@ -13,6 +13,7 @@ class ProductSerializer(serializers.ModelSerializer):
             "image",
             "description",
             "price",
+
         )
         read_only_fields = (
             "id",
@@ -21,3 +22,9 @@ class ProductSerializer(serializers.ModelSerializer):
             "created",
             "updated",
         )  # Поля, которые можно только читать
+
+
+class RatingSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = RatingProduct
+        fields = '__all__'
