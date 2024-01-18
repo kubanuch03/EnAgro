@@ -17,3 +17,4 @@ python-decouple==3.8
 redis==5.0.1
 twilio==8.11.0
 django-filter
+gunicorn

@@ -115,7 +115,7 @@ DATABASES = {
         "NAME": "enagro_db",
         "USER": "hello",
         "PASSWORD": "1",  
-        "HOST": "localhost",
+        "HOST": "db",
         "PORT": "5432",
     }
 }
