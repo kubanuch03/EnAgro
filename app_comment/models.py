@@ -1,16 +1,13 @@
 from datetime import datetime
-
 from django.db import models
 from django.conf import settings
-
-
 from .manager import ConfirmedCommentManager
 from app_products.models import Product
-
+from app_clients.models import Client
 
 class Comment(models.Model):
     writer = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
+        Client,
         on_delete=models.CASCADE,
         related_name="comments",
     )
@@ -28,9 +25,14 @@ class Comment(models.Model):
         blank=True,
     )
 
+    photo1 = models.ImageField(upload_to="comment/%Y/%m/%d/", blank=True, null=True)
+    photo2 = models.ImageField(upload_to="comment/%Y/%m/%d/", blank=True, null=True)
+    photo3 = models.ImageField(upload_to="comment/%Y/%m/%d/", blank=True, null=True)
+    photo4 = models.ImageField(upload_to="comment/%Y/%m/%d/", blank=True, null=True)
+
     is_sub = models.BooleanField(default=False)
     body = models.TextField()
-    register_date = models.DateTimeField()
+    register_date = models.DateTimeField(auto_now_add=True)
     is_confirm = models.BooleanField(default=False)
 
     objects = models.Manager()

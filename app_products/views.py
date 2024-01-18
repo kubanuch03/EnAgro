@@ -1,16 +1,14 @@
 from datetime import datetime
 
-from .serializers import ProductSerializer, RatingSerializers
-from app_products.models import Product, RatingProduct
+from .serializers import ProductSerializer
+from app_products.models import Product
 from .permissions import IsSellerOfProduct
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.viewsets import ModelViewSet
-from rest_framework import status
 from rest_framework.permissions import AllowAny, IsAdminUser
 from rest_framework import generics
-from rest_framework.response import Response
 from rest_framework.generics import CreateAPIView, ListAPIView
-
+from rest_framework import permissions
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter, OrderingFilter
 
@@ -18,20 +16,22 @@ from rest_framework.filters import SearchFilter, OrderingFilter
 class ProductCreateApiView(CreateAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
-    permission_classes = [IsAdminUser,]
+    permission_classes = [permissions.IsAuthenticated,]
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
+
+        
 
 
 class ProductListApiView(ListAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
-    permission_classes = (AllowAny,)
+    permission_classes =[AllowAny,]
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
     filterset_fields = ["category", "podcategory", "user", "price", "available"]
-    search_fields = ["name", "description"]
-    ordering_fields = ["name", "price"]
+    search_fields = ["title", "description"]
+    ordering_fields = ["title", "price"]
     permission_classes = [AllowAny,]
 
     def get_queryset(self):
@@ -41,7 +41,7 @@ class ProductListApiView(ListAPIView):
         start_date = self.request.query_params.get("start_date", None)
         end_date = self.request.query_params.get("end_date", None)
 
-        products = Product.objects.filter(name__icontains=query)
+        products = Product.objects.filter(title__icontains=query)
 
         if min_price is not None:
             products = products.filter(price__gte=min_price)
@@ -56,6 +56,8 @@ class ProductListApiView(ListAPIView):
             products = products.filter(created__lte=end_date)
 
         return products
+    
+    
 
     # def get(self, request):
     #     products = request.user.store.products.all()
@@ -68,9 +70,3 @@ class ProductDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     permission_classes = [IsSellerOfProduct,]
-
-
-class RetingViewSet(ModelViewSet):
-    queryset = RatingProduct.objects.all()
-    serializer_class = RatingSerializers
-    permission_classes = [IsAuthenticated, ]

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Product, RatingProduct
+from app_products.models import Product
 
 
 
@@ -30,10 +30,8 @@ class PriceFilter(admin.SimpleListFilter):
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ["id","name", "slug", "price", "available", "created", "updated"]
+    list_display = ["id","title", "slug", "price", "available", "created", "updated"]
     list_filter = ["available", "created", "updated", PriceFilter]
     list_editable = ["price", "available"]
-    prepopulated_fields = {"slug": ("name",)}
-    search_fields = ["name"]
-
-admin.site.register(RatingProduct)
+    prepopulated_fields = {"slug": ("title",)}
+    search_fields =["title"]

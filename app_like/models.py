@@ -15,7 +15,7 @@ class Like(models.Model):
         on_delete=models.CASCADE,
         related_name='likes',
     )
-    register_date = models.DateTimeField()
+    register_date = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         unique_together = ('user', 'product')

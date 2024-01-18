@@ -22,6 +22,14 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     token_auth = models.CharField(max_length=64, blank=True, null=True)
     is_staff = models.BooleanField(default=False)
     hone_number_code = models.CharField(max_length=6, blank=True, null=True)
+    RATING = (
+        (1, '⭐️'),
+        (2, '⭐️⭐️'),
+        (3, '⭐️⭐️⭐️'),
+        (4, '⭐️⭐️⭐️⭐️'),
+        (5, '⭐️⭐️⭐️⭐️⭐️'),
+    )
+    rating = models.IntegerField(choices=RATING, blank=True, null=True)
 
     objects = UserManager()
 
