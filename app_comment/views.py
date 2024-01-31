@@ -4,7 +4,7 @@ from .models import Comment
 from datetime import datetime
 
 from rest_framework import status
-from rest_framework.generics import GenericAPIView
+from rest_framework.generics import GenericAPIView, ListAPIView
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework import permissions
@@ -13,9 +13,6 @@ from rest_framework.views import APIView
 
 
 class CreateCommentView(GenericAPIView):
-    """
-    create new comment for product
-    """
 
     serializer_class = CommentSerializer
 
@@ -34,19 +31,11 @@ class CreateCommentView(GenericAPIView):
             )
 
 
-class CommentListView(GenericAPIView):
-    """
-    show list of confirmed comments
-    """
-
+class CommentListView(ListAPIView):
+    queryset =Comment.objects.all()
     serializer_class = CommentSerializer
-    queryset = Comment.confirmed.all()
-    permission_classes = (AllowAny,)
+    permission_classes = [permissions.AllowAny]
 
-    def get(self, request):
-        comments = Comment.confirmed.all()
-        srz_data = self.serializer_class(instance=comments, many=True)
-        return Response(data=srz_data.data, status=status.HTTP_200_OK)
 
 
 

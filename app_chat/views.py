@@ -51,3 +51,14 @@ class MessageListView(ListAPIView):
     queryset = Message.objects.all()
     serializer_class = MessageSerializer
     permission_classes = [IsAuthenticated, ]
+
+
+
+
+
+
+
+
+
+
+

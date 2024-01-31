@@ -100,7 +100,7 @@ TEMPLATES = [
                 "django.contrib.messages.context_processors.messages",
             ],
         },
-    },
+    },  
 ]
 
 WSGI_APPLICATION = "config.wsgi.application"
@@ -112,10 +112,10 @@ WSGI_APPLICATION = "config.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "enagro_db",
+        "NAME": "enagro",
         "USER": "hello",
         "PASSWORD": "1",  
-        "HOST": "db",
+        "HOST": "127.0.0.1",
         "PORT": "5432",
     }
 }
@@ -192,3 +192,15 @@ SIMPLE_JWT = {
 TWILIO_SID = config("TWILIO_SID")
 TWILIO_AUTH_TOKEN = config("TWILIO_AUTH_TOKEN")
 TWILIO_SENDER_PHONE = config("TWILIO_SENDER_PHONE")
+
+
+
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/1",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    }
+}

@@ -33,6 +33,7 @@ class ClientSerializer(serializers.ModelSerializer):
     password2 = serializers.CharField(write_only=True)
     phone_number = serializers.CharField(write_only=False, required=False)
     full_name = serializers.CharField(required=True)
+    client_rating = serializers.IntegerField(required=False, write_only=False)
 
     class Meta:
         model = Client
@@ -44,6 +45,7 @@ class ClientSerializer(serializers.ModelSerializer):
             "phone_number",
             "password",
             "password2",
+            "client_rating",
         )
 
     def validate(self, attrs):

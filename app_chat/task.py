@@ -13,3 +13,13 @@ def notification(self, email):
     send_mail(subject, message, from_email, recipient_list, fail_silently=True)
 
     return "Done"
+
+
+
+
+
+
+
+
+
+
