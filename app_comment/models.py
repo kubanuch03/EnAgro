@@ -44,3 +44,17 @@ class Comment(models.Model):
     #         self.register_date = datetime.now()
 
     #     super(Comment, self).save(*args, **kwargs)
+
+
+class CommentRating(models.Model):
+    comment = models.ForeignKey(Comment, on_delete=models.CASCADE)
+    user = models.ForeignKey(Client, on_delete=models.CASCADE)
+    created_at = models.DateField(auto_now_add=True)
+    RATING = (
+        (1, '⭐️'),
+        (2, '⭐️⭐️'),
+        (3, '⭐️⭐️⭐️'),
+        (4, '⭐️⭐️⭐️⭐️'),
+        (5, '⭐️⭐️⭐️⭐️⭐️'),
+    )
+    rating = models.IntegerField(choices=RATING, null=True)

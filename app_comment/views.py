@@ -1,15 +1,17 @@
-from .serializers import CommentSerializer
-from .models import Comment
-
+from .serializers import CommentSerializer, CommentRatingSerializer
+from .models import Comment, CommentRating
+from rest_framework.viewsets import ModelViewSet
 from datetime import datetime
 
 from rest_framework import status
-from rest_framework.generics import GenericAPIView, ListAPIView
+from rest_framework.generics import GenericAPIView, ListAPIView, ListCreateAPIView
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework import permissions
 from django.http import Http404
 from rest_framework.views import APIView
+import logging
+logger = logging.getLogger(__name__)
 
 
 class CreateCommentView(GenericAPIView):
@@ -61,4 +63,18 @@ class CommentDeleteApiView(APIView):
 
 
 
+class CommentsRatingViewSet(ListCreateAPIView):
+    queryset = CommentRating.objects.all()
+    serializer_class = CommentRatingSerializer
+
+    def get_queryset(self):
+        try:
+            comment_id = self.kwargs['comment_id']
+            return CommentRating.objects.filter(comment_id=comment_id)
+        except CommentRating.DoesNotExist:
+            return CommentRating.objects.none()
+        except Exception as e:
+            logger.error(f"Error in CommentsCourseAPIView: {e}")
+            return CommentRating.objects.none()
+    queryset = CommentRating.objects.none()
 

@@ -33,7 +33,7 @@ class ClientSerializer(serializers.ModelSerializer):
     password2 = serializers.CharField(write_only=True)
     phone_number = serializers.CharField(write_only=False, required=False)
     full_name = serializers.CharField(required=True)
-    client_rating = serializers.IntegerField(required=False, write_only=False)
+    client_rating = serializers.IntegerField(required=True, write_only=True)
 
     class Meta:
         model = Client

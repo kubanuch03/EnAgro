@@ -13,6 +13,7 @@ class CustomUserSerializer(serializers.ModelSerializer):
             "full_name",
             "password",
             "is_active",
+            "client_rating",
         )
         extra_kwargs = {"password": {"write_only": True}}
 
@@ -24,5 +25,6 @@ class CustomUserSerializer(serializers.ModelSerializer):
             full_name=validated_data.get("full_name", ""),
             password=validated_data["password"],
             token_auth=get_random_string(64),
+            client_rating=validated_data.get("client_rating", ""),
         )
         return user
