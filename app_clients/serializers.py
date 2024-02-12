@@ -12,7 +12,6 @@ from django.utils.http import urlsafe_base64_decode
 
 from rest_framework import serializers
 
-from app_users.send_sms import send_activation_sms
 from .models import Client
 from django.contrib.auth import get_user_model
 
@@ -33,7 +32,7 @@ class ClientSerializer(serializers.ModelSerializer):
     password2 = serializers.CharField(write_only=True)
     phone_number = serializers.CharField(write_only=False, required=False)
     full_name = serializers.CharField(required=True)
-    client_rating = serializers.IntegerField(required=True, write_only=True)
+    # client_rating = serializers.IntegerField(required=True, write_only=True)
 
     class Meta:
         model = Client
@@ -45,7 +44,6 @@ class ClientSerializer(serializers.ModelSerializer):
             "phone_number",
             "password",
             "password2",
-            "client_rating",
         )
 
     def validate(self, attrs):
@@ -82,7 +80,7 @@ class ClientSerializer(serializers.ModelSerializer):
         make_password(validated_data["password"])
 
         return client
-
+    
     # def create_by_phone(self, validated_data):
     #     user = Client.objects.create_user(**validated_data)
     #     send_activation_sms(user.phone_number, user.activation_code)
@@ -163,32 +161,11 @@ class RegisterPhoneSerializer(serializers.ModelSerializer):
             "password2",
         )
 
-    def create(self, validated_data):
-        user = Client.objects.create_user(**validated_data)
-        send_activation_sms(user.phone_number, user.activation_code)
-        return user
-
     def save(self, **kwargs):
         user = super().save(**kwargs)
         return user
 
 
-class ActivationSerializer(serializers.Serializer):
-    code = serializers.CharField(required=True)
-
-    def validate(self, attrs):
-        self.code = attrs["code"]
-        return attrs
-
-    def save(self, **kwargs):
-        try:
-            user = User.objects.get(activation_code=self.code)
-            user.is_active = True
-            user.activation_code = ""
-            user.save()
-        except:
-            self.fail("неверный код")
-        fields = ("id", "username", "email", "full_name", "avatar")
 
 
 class ConfirmEmailSerializer(serializers.Serializer):

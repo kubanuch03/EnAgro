@@ -4,8 +4,9 @@ from rest_framework.response import Response
 from rest_framework import serializers
 from .task import notification
 from .models import Chat, Message
-from .serializers import ChatSerializer, MessageSerializer, ChatCreateSerializer
-from rest_framework.permissions import IsAuthenticated
+from .serializers import ChatSerializer, MessageSerializer, ChatCreateSerializer, CreateMessageSerializer
+from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework import generics
 
 
 class ChatListView(ListAPIView):
@@ -20,9 +21,16 @@ class ChatCreateView(CreateAPIView):
     permission_classes = [IsAuthenticated, ]
 
 
+class ChatDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Chat.objects.all()
+    serializer_class = ChatSerializer
+    permission_classes = [AllowAny,  ]
+    lookup_field = 'id'
+
+
 class MessageCreateView(CreateAPIView):
     queryset = Message.objects.all()
-    serializer_class = MessageSerializer
+    serializer_class = CreateMessageSerializer
     permission_classes = [IsAuthenticated, ]
 
     def perform_create(self, serializer):
@@ -51,6 +59,11 @@ class MessageListView(ListAPIView):
     queryset = Message.objects.all()
     serializer_class = MessageSerializer
     permission_classes = [IsAuthenticated, ]
+
+class MessageDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Message.objects.all()
+    serializer_class = MessageSerializer
+    lookup_field = 'id'
 
 
 

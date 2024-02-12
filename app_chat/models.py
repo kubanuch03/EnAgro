@@ -4,10 +4,8 @@ from app_clients.models import Client
 
 
 class Chat(models.Model):
-    participants = models.ManyToManyField(Client, related_name="chats")
-    owner = models.OneToOneField(
-        Client, on_delete=models.CASCADE, related_name="owned_chat", unique=True
-    )
+    participants = models.ForeignKey(Client, on_delete=models.CASCADE, related_name="chats")
+    owner = models.ForeignKey(Client, on_delete=models.CASCADE, related_name="owned_chat")
 
     def __str__(self):
         return f"Chat {self.id}"
@@ -15,15 +13,9 @@ class Chat(models.Model):
 
 class Message(models.Model):
     chat = models.ForeignKey(Chat, on_delete=models.CASCADE, related_name="messages")
-    recipient = models.ForeignKey(Client, on_delete=models.CASCADE)
-    chat = models.ForeignKey(Chat, on_delete=models.CASCADE, related_name="messages")
-    recipient = models.ForeignKey(
-        Client, on_delete=models.CASCADE, related_name="received_messages"
-    )
-    sender = models.ForeignKey(
-        Client, on_delete=models.CASCADE, related_name="sent_messages"
-    )
-    content = models.TextField()
+    recipient = models.ForeignKey(Client, on_delete=models.CASCADE, related_name="received_messages")
+    sender = models.ForeignKey(Client, on_delete=models.CASCADE, related_name="sent_messages")
+    message = models.TextField()
     timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

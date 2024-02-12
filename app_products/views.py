@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from .serializers import ProductSerializer
+from .serializers import ProductSerializer, ProductDetailSerializer
 from app_products.models import Product
 from .permissions import IsSellerOfProduct
 from rest_framework.permissions import IsAuthenticated
@@ -9,8 +9,26 @@ from rest_framework.permissions import AllowAny, IsAdminUser
 from rest_framework import generics
 from rest_framework.generics import CreateAPIView, ListAPIView
 from rest_framework import permissions
+from rest_framework.views import APIView
+from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter, OrderingFilter
+
+
+
+class ProductsByPodCategoryApiView(APIView):
+    def get(self, request, podcategory_id):
+        products = Product.objects.filter(podcategory_id=podcategory_id)
+        serializer = ProductSerializer(products, many=True)
+        return Response(serializer.data)
+
+
+
+class ProductsByCategoryApiView(APIView):
+    def get(self, request, category_id):
+        products = Product.objects.filter(category_id=category_id)
+        serializer = ProductSerializer(products, many=True)
+        return Response(serializer.data)
 
 
 class ProductCreateApiView(CreateAPIView):
@@ -18,10 +36,6 @@ class ProductCreateApiView(CreateAPIView):
     serializer_class = ProductSerializer
     permission_classes = [permissions.IsAuthenticated,]
 
-    def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
-
-        
 
 
 class ProductListApiView(ListAPIView):
@@ -59,14 +73,13 @@ class ProductListApiView(ListAPIView):
     
     
 
+class ProductDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Product.objects.all()
+    serializer_class = ProductDetailSerializer
+    permission_classes = [IsSellerOfProduct,]
     # def get(self, request):
     #     products = request.user.store.products.all()
     #     srz_data = self.serializer_class(instance=products, many=True)
     #     return Response(data=srz_data.data, status=status.HTTP_200_OK)
 
 
-# Представление для получения деталей, обновления и удаления продукта
-class ProductDetailView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Product.objects.all()
-    serializer_class = ProductSerializer
-    permission_classes = [IsSellerOfProduct,]

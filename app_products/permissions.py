@@ -54,4 +54,4 @@ class IsSellerOfProduct(BasePermission):
         return request.user.is_authenticated and request.user
 
     def has_object_permission(self, request, view, obj):
-        return bool(obj.seller.founder == request.user and request.user.is_seller)
+        return obj.user == request.user

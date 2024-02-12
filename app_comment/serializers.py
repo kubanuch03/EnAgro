@@ -5,10 +5,10 @@ from app_comment.models import Comment, CommentRating
 class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
-        fields = "__all__"
+        fields = ['id', 'author', 'product', 'photo1','photo2','photo3','photo4', 'body']
 
 
 class CommentRatingSerializer(serializers.ModelSerializer):
     class Meta:
         model = CommentRating
-        fields = '__all__'
+        fields = ['id', 'comment', 'rating', 'user'] 

@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     # lib
-    "twilio",
+    # "twilio",
     "rest_framework",
     "rest_framework_simplejwt",
     "drf_spectacular",
@@ -189,18 +189,18 @@ SIMPLE_JWT = {
     "UPDATE_LAST_LOGIN": True,
 }
 
-TWILIO_SID = config("TWILIO_SID")
-TWILIO_AUTH_TOKEN = config("TWILIO_AUTH_TOKEN")
-TWILIO_SENDER_PHONE = config("TWILIO_SENDER_PHONE")
+# TWILIO_SID = config("TWILIO_SID")
+# TWILIO_AUTH_TOKEN = config("TWILIO_AUTH_TOKEN")
+# TWILIO_SENDER_PHONE = config("TWILIO_SENDER_PHONE")
 
 
 
-CACHES = {
-    "default": {
-        "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://127.0.0.1:6379/1",
-        "OPTIONS": {
-            "CLIENT_CLASS": "django_redis.client.DefaultClient",
-        }
-    }
-}
+# CACHES = {
+#     "default": {
+#         "BACKEND": "django_redis.cache.RedisCache",
+#         "LOCATION": "redis://127.0.0.1:6379/1",
+#         "OPTIONS": {
+#             "CLIENT_CLASS": "django_redis.client.DefaultClient",
+#         }
+#     }
+# }

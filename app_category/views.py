@@ -14,7 +14,6 @@ class CategoryCreateApiView(CreateAPIView):
     ]
 
 
-
 class CategoryListView(ListAPIView):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
@@ -30,7 +29,6 @@ class CategoryListView(ListAPIView):
         return Category.objects.filter(name__icontains=query)
 
 
-
 class CategoryDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
@@ -39,8 +37,10 @@ class CategoryDetailView(generics.RetrieveUpdateDestroyAPIView):
     ]
 
 
+'=============================================================='
 
-class PodCategoryViewSet(ModelViewSet):
+
+class PodCategoryListView(ListAPIView):
     queryset = PodCategory.objects.all()
     serializer_class = PodCategorySerializer
     permission_classes = [
@@ -49,6 +49,25 @@ class PodCategoryViewSet(ModelViewSet):
     filterset_fields = ["name"]
     search_fields = ["name"]
     ordering_fields = ["name", "category"]
+
     def get_queryset(self):
         query = self.request.query_params.get("search", "")
         return PodCategory.objects.filter(name__icontains=query)
+
+
+class PodCategoryCreateApiView(CreateAPIView):
+    queryset = PodCategory.objects.all()
+    serializer_class = PodCategorySerializer
+    permission_classes = [
+        IsAdminUser,
+    ]
+
+
+class PodCategoryDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = PodCategory.objects.all()
+    serializer_class = PodCategorySerializer
+    permission_classes = [
+        IsAdminUser,
+    ]
+
+

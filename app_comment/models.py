@@ -26,7 +26,7 @@ class Comment(models.Model):
     photo2 = models.ImageField(upload_to="comment/%Y/%m/%d/", blank=True, null=True)
     photo3 = models.ImageField(upload_to="comment/%Y/%m/%d/", blank=True, null=True)
     photo4 = models.ImageField(upload_to="comment/%Y/%m/%d/", blank=True, null=True)
-    created_at = models.DateField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True)
     body = models.TextField()
     # is_confirm = models.BooleanField(default=False)
     # confirmed = ConfirmedCommentManager()
@@ -57,4 +57,4 @@ class CommentRating(models.Model):
         (4, '⭐️⭐️⭐️⭐️'),
         (5, '⭐️⭐️⭐️⭐️⭐️'),
     )
-    rating = models.IntegerField(choices=RATING, null=True)
+    rating = models.IntegerField(choices=RATING)

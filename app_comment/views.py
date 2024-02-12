@@ -1,10 +1,10 @@
 from .serializers import CommentSerializer, CommentRatingSerializer
 from .models import Comment, CommentRating
-from rest_framework.viewsets import ModelViewSet
+from rest_framework import generics
 from datetime import datetime
 
 from rest_framework import status
-from rest_framework.generics import GenericAPIView, ListAPIView, ListCreateAPIView
+from rest_framework.generics import GenericAPIView, ListAPIView, CreateAPIView
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework import permissions
@@ -12,25 +12,15 @@ from django.http import Http404
 from rest_framework.views import APIView
 import logging
 logger = logging.getLogger(__name__)
+from app_clients.permissions import IsClientOrAdmin
 
 
-class CreateCommentView(GenericAPIView):
-
+class CreateCommentView(CreateAPIView):
+    queryset = Comment.objects.all()
     serializer_class = CommentSerializer
+    permission_classes = [IsAuthenticated]
 
-    permission_classes = (IsAuthenticated,)
 
-    def post(self, request):
-        srz_data = self.serializer_class(data=request.data)
-        if srz_data.is_valid(raise_exception=True):
-            srz_data.save(
-                writer=request.user,
-                register_date=datetime.now(),
-            )
-            return Response(
-                data={"message": "comment created success"},
-                status=status.HTTP_201_CREATED,
-            )
 
 
 class CommentListView(ListAPIView):
@@ -39,6 +29,29 @@ class CommentListView(ListAPIView):
     permission_classes = [permissions.AllowAny]
 
 
+class CommentDetailView(generics.RetrieveUpdateAPIView):
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer
+    permission_classes = [IsClientOrAdmin,]
+    lookup_field = "id"
+
+
+
+class ProductCommentsApiView(ListAPIView):
+    queryset = Comment.objects.all()
+    permission_classes = [permissions.AllowAny]
+    serializer_class = CommentSerializer
+
+    def get_queryset(self):
+        try:
+            product_id = self.kwargs['product_id']
+            return Comment.objects.filter(product_id=product_id)
+        except Comment.DoesNotExist:
+            return CommentRating.objects.none()
+        except Exception as e:
+            logger.error(f"Error in CommentsCourseAPIView: {e}")
+            return Comment.objects.none()
+    queryset = Comment.objects.none()
 
 
 
@@ -63,7 +76,7 @@ class CommentDeleteApiView(APIView):
 
 
 
-class CommentsRatingViewSet(ListCreateAPIView):
+class CommentsRatingViewSet(ListAPIView):
     queryset = CommentRating.objects.all()
     serializer_class = CommentRatingSerializer
 
@@ -78,3 +91,7 @@ class CommentsRatingViewSet(ListCreateAPIView):
             return CommentRating.objects.none()
     queryset = CommentRating.objects.none()
 
+class RatingCommentApiView(CreateAPIView):
+    queryset = CommentRating.objects.all()
+    serializer_class = CommentRatingSerializer
+    permission_classes = [AllowAny, ]

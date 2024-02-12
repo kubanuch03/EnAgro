@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.views import APIView
-from rest_framework.decorators import api_view, permission_classes
+from rest_framework.decorators import api_view
 from rest_framework.permissions import AllowAny
 
 from django.contrib.auth import login, authenticate
@@ -18,7 +18,6 @@ from .serializers import (
     ClientProfileSerializer,
     ClientSerializer,
     RegisterPhoneSerializer,
-    ActivationSerializer,
     ConfirmEmailSerializer,
     PasswordResetSerializer
 )
@@ -105,6 +104,7 @@ class RegisterClientView(generics.CreateAPIView):
                 "email": client.email,
                 "username": client.username,
                 "phone_number": client.phone_number,
+                "подтвердите регистрацию, отправили код на ваш email адрес":client.email,
             },
             status=status.HTTP_201_CREATED,
         )
@@ -131,14 +131,15 @@ class RegisterClientView(generics.CreateAPIView):
 
 class LoginClientView(generics.GenericAPIView):
     serializer_class = LoginClientSerializer
-    permission_classes = [AllowAny, ]
+    permission_classes = [permissions.AllowAny]
 
     def post(self, request, *args, **kwargs):
         email = request.data.get("email", None)
         password = request.data.get("password", None)
 
         if email and password:
-            client = authenticate(email=email, password=password)
+            client = authenticate(username=email, password=password)
+            print(f"Client: {client}")
 
             if client:
                 login(request, client)
@@ -165,7 +166,7 @@ class LoginClientView(generics.GenericAPIView):
                 {"detail": "Invalid input. Both email and password are required."},
                 status=status.HTTP_400_BAD_REQUEST,
             )
-
+        
     def get(self, request, token):
         try:
             user = Client.objects.get(activation_token=token)
@@ -217,10 +218,12 @@ class ClientUpdateView(generics.RetrieveUpdateAPIView):
     permission_classes = [IsClientOrAdmin, ]
 
 
+
 class ClientDeleteView(generics.DestroyAPIView):
     queryset = Client.objects.all()
     serializer_class = ClientSerializer
     permission_classes = [permissions.IsAdminUser, ]
+    # lookup_field = "pk"
 
 
 class ClientProfileView(generics.RetrieveUpdateAPIView):

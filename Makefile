@@ -2,7 +2,7 @@
 
 
 install:
-	pip install -r requirement.txt
+	pip install -r requirements.txt
  
 migrate:
 	python manage.py makemigrations

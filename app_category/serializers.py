@@ -5,12 +5,11 @@ from .models import Category, PodCategory
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
-        fields = ("id", "name", "slug", "img")
-        read_only_fields = ("id", "slug")  # Поля, которые можно только читать
+        fields = ("id", "name",  "img")
 
 
 class PodCategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = PodCategory
-        fields = ("id", "name", "category", "slug", "img")
-        read_only_fields = ("id", "slug") 
+        fields = ("id", "name", "category", "img")
+        # read_only_fields = ("id", )
