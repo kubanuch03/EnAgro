@@ -1,10 +1,10 @@
-from .serializers import CommentSerializer, CommentRatingSerializer
-from .models import Comment, CommentRating
+from .serializers import CommentSerializer
+from .models import Comment
 from rest_framework import generics
 from datetime import datetime
 
 from rest_framework import status
-from rest_framework.generics import GenericAPIView, ListAPIView, CreateAPIView
+from rest_framework.generics import ListAPIView, CreateAPIView
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework import permissions
@@ -47,7 +47,7 @@ class ProductCommentsApiView(ListAPIView):
             product_id = self.kwargs['product_id']
             return Comment.objects.filter(product_id=product_id)
         except Comment.DoesNotExist:
-            return CommentRating.objects.none()
+            return Comment.objects.none()
         except Exception as e:
             logger.error(f"Error in CommentsCourseAPIView: {e}")
             return Comment.objects.none()
@@ -73,25 +73,3 @@ class CommentDeleteApiView(APIView):
 
 
 
-
-
-
-class CommentsRatingViewSet(ListAPIView):
-    queryset = CommentRating.objects.all()
-    serializer_class = CommentRatingSerializer
-
-    def get_queryset(self):
-        try:
-            comment_id = self.kwargs['comment_id']
-            return CommentRating.objects.filter(comment_id=comment_id)
-        except CommentRating.DoesNotExist:
-            return CommentRating.objects.none()
-        except Exception as e:
-            logger.error(f"Error in CommentsCourseAPIView: {e}")
-            return CommentRating.objects.none()
-    queryset = CommentRating.objects.none()
-
-class RatingCommentApiView(CreateAPIView):
-    queryset = CommentRating.objects.all()
-    serializer_class = CommentRatingSerializer
-    permission_classes = [AllowAny, ]

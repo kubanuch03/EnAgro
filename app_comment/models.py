@@ -28,6 +28,14 @@ class Comment(models.Model):
     photo4 = models.ImageField(upload_to="comment/%Y/%m/%d/", blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     body = models.TextField()
+    RATING = (
+        (1, '⭐️'),
+        (2, '⭐️⭐️'),
+        (3, '⭐️⭐️⭐️'),
+        (4, '⭐️⭐️⭐️⭐️'),
+        (5, '⭐️⭐️⭐️⭐️⭐️'),
+    )
+    rating = models.IntegerField(choices=RATING)
     # is_confirm = models.BooleanField(default=False)
     # confirmed = ConfirmedCommentManager()
     # is_sub = models.BooleanField(default=False)
@@ -46,15 +54,4 @@ class Comment(models.Model):
     #     super(Comment, self).save(*args, **kwargs)
 
 
-class CommentRating(models.Model):
-    comment = models.ForeignKey(Comment, on_delete=models.CASCADE)
-    user = models.ForeignKey(Client, on_delete=models.CASCADE)
-    created_at = models.DateField(auto_now_add=True)
-    RATING = (
-        (1, '⭐️'),
-        (2, '⭐️⭐️'),
-        (3, '⭐️⭐️⭐️'),
-        (4, '⭐️⭐️⭐️⭐️'),
-        (5, '⭐️⭐️⭐️⭐️⭐️'),
-    )
-    rating = models.IntegerField(choices=RATING)
+

@@ -1,11 +1,7 @@
 from django.contrib import admin
-from .models import Comment, CommentRating
+from .models import Comment
 
 
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
-    pass
-
-@admin.register(CommentRating)
-class AdminComment(admin.ModelAdmin):
     pass

@@ -2,7 +2,7 @@ from datetime import datetime
 
 from .serializers import ProductSerializer, ProductDetailSerializer
 from app_products.models import Product
-from .permissions import IsSellerOfProduct
+from .permissions import IsSellerOfProduct, IsAdminOrOwnerOrReadOnly
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import AllowAny, IsAdminUser
@@ -76,7 +76,7 @@ class ProductListApiView(ListAPIView):
 class ProductDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductDetailSerializer
-    permission_classes = [IsSellerOfProduct,]
+    permission_classes = [IsAdminOrOwnerOrReadOnly,]
     # def get(self, request):
     #     products = request.user.store.products.all()
     #     srz_data = self.serializer_class(instance=products, many=True)

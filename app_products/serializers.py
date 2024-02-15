@@ -42,7 +42,7 @@ class ProductSerializer(serializers.ModelSerializer):
         # )  # Поля, которые можно только читать
 
 
-class ProductDetailSerializer(serializers.ModelField):
+class ProductDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
         fields = [
