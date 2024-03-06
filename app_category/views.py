@@ -33,7 +33,7 @@ class CategoryDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
     permission_classes = [
-        IsAdminUser,
+        AllowAny,
     ]
 
 
@@ -67,7 +67,7 @@ class PodCategoryDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = PodCategory.objects.all()
     serializer_class = PodCategorySerializer
     permission_classes = [
-        IsAdminUser,
+        AllowAny,
     ]
 
 

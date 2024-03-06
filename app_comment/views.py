@@ -1,4 +1,4 @@
-from .serializers import CommentSerializer
+from .serializers import CommentListSerializer, CommentCreateSerializer
 from .models import Comment
 from rest_framework import generics
 from datetime import datetime
@@ -17,21 +17,21 @@ from app_clients.permissions import IsClientOrAdmin
 
 class CreateCommentView(CreateAPIView):
     queryset = Comment.objects.all()
-    serializer_class = CommentSerializer
-    permission_classes = [IsAuthenticated]
+    serializer_class = CommentCreateSerializer
+    # permission_classes = [IsAuthenticated]
 
 
 
 
 class CommentListView(ListAPIView):
     queryset =Comment.objects.all()
-    serializer_class = CommentSerializer
+    serializer_class = CommentListSerializer
     permission_classes = [permissions.AllowAny]
 
 
 class CommentDetailView(generics.RetrieveUpdateAPIView):
     queryset = Comment.objects.all()
-    serializer_class = CommentSerializer
+    serializer_class = CommentCreateSerializer
     permission_classes = [IsClientOrAdmin,]
     lookup_field = "id"
 
@@ -40,7 +40,7 @@ class CommentDetailView(generics.RetrieveUpdateAPIView):
 class ProductCommentsApiView(ListAPIView):
     queryset = Comment.objects.all()
     permission_classes = [permissions.AllowAny]
-    serializer_class = CommentSerializer
+    serializer_class = CommentListSerializer
 
     def get_queryset(self):
         try:
@@ -57,7 +57,7 @@ class ProductCommentsApiView(ListAPIView):
 
 class CommentDeleteApiView(APIView):
     permission_classes = [permissions.IsAdminUser]
-    serializer_class = CommentSerializer
+    serializer_class = CommentListSerializer
 
     def get_object(self, pk):
         try:
