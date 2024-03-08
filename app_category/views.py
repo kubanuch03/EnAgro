@@ -4,6 +4,8 @@ from .serializers import CategorySerializer, PodCategorySerializer
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import AllowAny, IsAdminUser
 from rest_framework import generics
+from rest_framework.views import APIView
+from rest_framework.response import Response
 
 
 class CategoryCreateApiView(CreateAPIView):
@@ -70,4 +72,10 @@ class PodCategoryDetailView(generics.RetrieveUpdateDestroyAPIView):
         AllowAny,
     ]
 
+
+class PodCategoryByCategory(APIView):
+    def get(self, request, category_id):
+        podcategory = PodCategory.objects.filter(category_id=category_id)
+        serializer = PodCategorySerializer(podcategory, many=True)
+        return Response(serializer.data)
 

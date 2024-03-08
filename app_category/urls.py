@@ -6,7 +6,8 @@ from .views import (
     CategoryDetailView,
     PodCategoryListView,
     PodCategoryCreateApiView,
-    PodCategoryDetailView
+    PodCategoryDetailView,
+    PodCategoryByCategory,
 )
 
 # router = DefaultRouter()
@@ -21,4 +22,5 @@ urlpatterns = [
     path("pod/category/list/", PodCategoryListView.as_view(), name="PodCategory-list"),
     path('pod/category/create/', PodCategoryCreateApiView.as_view(), name='PodCategory-create'),
     path("pod/category/<int:pk>/", PodCategoryDetailView.as_view(), name="PodCategory-detail"),
+    path("pydcategory/by/category/<int:category_id>/", PodCategoryByCategory.as_view(), name='PosCategoryByCategory')
 ]

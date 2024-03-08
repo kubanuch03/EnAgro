@@ -1,7 +1,7 @@
 from rest_framework import status
 from rest_framework.generics import CreateAPIView, ListAPIView
 from rest_framework.response import Response
-from rest_framework import serializers
+from rest_framework.views import APIView
 from .task import notification
 from .models import Chat, Message
 from .serializers import ChatSerializer, MessageSerializer, ChatCreateSerializer, CreateMessageSerializer
@@ -65,6 +65,12 @@ class MessageDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = MessageSerializer
     lookup_field = 'id'
 
+
+class MessageByChat(APIView):
+    def get(self, request, chat_id):
+        message = Message.objects.filter(chat_id=chat_id)
+        serializer = MessageSerializer(message, many=True)
+        return Response(serializer.data)
 
 
 
